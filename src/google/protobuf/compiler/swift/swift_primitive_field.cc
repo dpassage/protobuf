@@ -31,9 +31,9 @@
 #include <map>
 #include <string>
 
-#include <google/protobuf/compiler/objectivec/objectivec_primitive_field.h>
+#include <google/protobuf/compiler/swift/swift_primitive_field.h>
 #include <google/protobuf/stubs/common.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/wire_format.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -43,7 +43,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 using internal::WireFormat;
 using internal::WireFormatLite;
@@ -51,29 +51,29 @@ using internal::WireFormatLite;
 namespace {
 
 const char* PrimitiveTypeName(const FieldDescriptor* descriptor) {
-  ObjectiveCType type = GetObjectiveCType(descriptor);
+  SwiftType type = GetSwiftType(descriptor);
   switch (type) {
-    case OBJECTIVECTYPE_INT32:
+    case SWIFTTYPE_INT32:
       return "int32_t";
-    case OBJECTIVECTYPE_UINT32:
+    case SWIFTTYPE_UINT32:
       return "uint32_t";
-    case OBJECTIVECTYPE_INT64:
+    case SWIFTTYPE_INT64:
       return "int64_t";
-    case OBJECTIVECTYPE_UINT64:
+    case SWIFTTYPE_UINT64:
       return "uint64_t";
-    case OBJECTIVECTYPE_FLOAT:
+    case SWIFTTYPE_FLOAT:
       return "float";
-    case OBJECTIVECTYPE_DOUBLE:
+    case SWIFTTYPE_DOUBLE:
       return "double";
-    case OBJECTIVECTYPE_BOOLEAN:
+    case SWIFTTYPE_BOOLEAN:
       return "BOOL";
-    case OBJECTIVECTYPE_STRING:
+    case SWIFTTYPE_STRING:
       return "NSString";
-    case OBJECTIVECTYPE_DATA:
+    case SWIFTTYPE_DATA:
       return "NSData";
-    case OBJECTIVECTYPE_ENUM:
+    case SWIFTTYPE_ENUM:
       return "int32_t";
-    case OBJECTIVECTYPE_MESSAGE:
+    case SWIFTTYPE_MESSAGE:
       return NULL;
   }
 
@@ -82,29 +82,29 @@ const char* PrimitiveTypeName(const FieldDescriptor* descriptor) {
 }
 
 const char* PrimitiveArrayTypeName(const FieldDescriptor* descriptor) {
-  ObjectiveCType type = GetObjectiveCType(descriptor);
+  SwiftType type = GetSwiftType(descriptor);
   switch (type) {
-    case OBJECTIVECTYPE_INT32:
+    case SWIFTTYPE_INT32:
       return "Int32";
-    case OBJECTIVECTYPE_UINT32:
+    case SWIFTTYPE_UINT32:
       return "UInt32";
-    case OBJECTIVECTYPE_INT64:
+    case SWIFTTYPE_INT64:
       return "Int64";
-    case OBJECTIVECTYPE_UINT64:
+    case SWIFTTYPE_UINT64:
       return "UInt64";
-    case OBJECTIVECTYPE_FLOAT:
+    case SWIFTTYPE_FLOAT:
       return "Float";
-    case OBJECTIVECTYPE_DOUBLE:
+    case SWIFTTYPE_DOUBLE:
       return "Double";
-    case OBJECTIVECTYPE_BOOLEAN:
+    case SWIFTTYPE_BOOLEAN:
       return "Bool";
-    case OBJECTIVECTYPE_STRING:
+    case SWIFTTYPE_STRING:
       return "";  // Want NSArray
-    case OBJECTIVECTYPE_DATA:
+    case SWIFTTYPE_DATA:
       return "";  // Want NSArray
-    case OBJECTIVECTYPE_ENUM:
+    case SWIFTTYPE_ENUM:
       return "Enum";
-    case OBJECTIVECTYPE_MESSAGE:
+    case SWIFTTYPE_MESSAGE:
       return "";  // Want NSArray
   }
 
@@ -161,7 +161,7 @@ void RepeatedPrimitiveFieldGenerator::FinishInitialization(void) {
   }
 }
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

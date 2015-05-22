@@ -28,63 +28,44 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_FIELD_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_FIELD_H__
+
 #include <map>
 #include <string>
-
-#include <google/protobuf/compiler/objectivec/objectivec_message_field.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
-#include <google/protobuf/io/printer.h>
-#include <google/protobuf/wire_format.h>
-#include <google/protobuf/stubs/strutil.h>
+#include <google/protobuf/compiler/swift/swift_field.h>
 
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
-namespace {
+class MessageFieldGenerator : public ObjCObjFieldGenerator {
+  friend FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field);
 
-void SetMessageVariables(const FieldDescriptor* descriptor,
-                         map<string, string>* variables) {
-  const string& message_type = ClassName(descriptor->message_type());
-  (*variables)["type"] = message_type;
-  (*variables)["containing_class"] = ClassName(descriptor->containing_type());
-  (*variables)["storage_type"] = message_type;
-  (*variables)["group_or_message"] =
-      (descriptor->type() == FieldDescriptor::TYPE_GROUP) ? "Group" : "Message";
+ protected:
+  MessageFieldGenerator(const FieldDescriptor* descriptor);
+  virtual ~MessageFieldGenerator();
+  virtual bool WantsHasProperty(void) const;
 
-  (*variables)["typeSpecific_value"] = "GPBStringifySymbol(" + message_type + ")";
-}
+ private:
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MessageFieldGenerator);
+};
 
-}  // namespace
+class RepeatedMessageFieldGenerator : public RepeatedFieldGenerator {
+  friend FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field);
 
-MessageFieldGenerator::MessageFieldGenerator(const FieldDescriptor* descriptor)
-    : ObjCObjFieldGenerator(descriptor) {
-  SetMessageVariables(descriptor, &variables_);
-}
+ protected:
+  RepeatedMessageFieldGenerator(const FieldDescriptor* descriptor);
+  virtual ~RepeatedMessageFieldGenerator();
 
-MessageFieldGenerator::~MessageFieldGenerator() {}
+ private:
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(RepeatedMessageFieldGenerator);
+};
 
-bool MessageFieldGenerator::WantsHasProperty(void) const {
-  if (descriptor_->containing_oneof() != NULL) {
-    // If in a oneof, it uses the oneofcase instead of a has bit.
-    return false;
-  }
-  // In both proto2 & proto3, message fields have a has* property to tell
-  // when it is a non default value.
-  return true;
-}
-
-RepeatedMessageFieldGenerator::RepeatedMessageFieldGenerator(
-    const FieldDescriptor* descriptor)
-    : RepeatedFieldGenerator(descriptor) {
-  SetMessageVariables(descriptor, &variables_);
-  variables_["array_storage_type"] = "NSMutableArray";
-}
-
-RepeatedMessageFieldGenerator::~RepeatedMessageFieldGenerator() {}
-
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
+
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_FIELD_H__

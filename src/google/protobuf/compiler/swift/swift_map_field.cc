@@ -31,9 +31,9 @@
 #include <map>
 #include <string>
 
-#include <google/protobuf/compiler/objectivec/objectivec_map_field.h>
+#include <google/protobuf/compiler/swift/swift_map_field.h>
 #include <google/protobuf/stubs/common.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/stubs/substitute.h>
@@ -41,7 +41,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 // MapFieldGenerator uses RepeatedFieldGenerator as the parent because it
 // provides a bunch of things (no has* methods, comments for contained type,
@@ -50,29 +50,29 @@ namespace objectivec {
 namespace {
 
 const char* MapEntryTypeName(const FieldDescriptor* descriptor, bool isKey) {
-  ObjectiveCType type = GetObjectiveCType(descriptor);
+  SwiftType type = GetSwiftType(descriptor);
   switch (type) {
-    case OBJECTIVECTYPE_INT32:
+    case SWIFTTYPE_INT32:
       return "Int32";
-    case OBJECTIVECTYPE_UINT32:
+    case SWIFTTYPE_UINT32:
       return "UInt32";
-    case OBJECTIVECTYPE_INT64:
+    case SWIFTTYPE_INT64:
       return "Int64";
-    case OBJECTIVECTYPE_UINT64:
+    case SWIFTTYPE_UINT64:
       return "UInt64";
-    case OBJECTIVECTYPE_FLOAT:
+    case SWIFTTYPE_FLOAT:
       return "Float";
-    case OBJECTIVECTYPE_DOUBLE:
+    case SWIFTTYPE_DOUBLE:
       return "Double";
-    case OBJECTIVECTYPE_BOOLEAN:
+    case SWIFTTYPE_BOOLEAN:
       return "Bool";
-    case OBJECTIVECTYPE_STRING:
+    case SWIFTTYPE_STRING:
       return (isKey ? "String" : "Object");
-    case OBJECTIVECTYPE_DATA:
+    case SWIFTTYPE_DATA:
       return "Object";
-    case OBJECTIVECTYPE_ENUM:
+    case SWIFTTYPE_ENUM:
       return "Enum";
-    case OBJECTIVECTYPE_MESSAGE:
+    case SWIFTTYPE_MESSAGE:
       return "Object";
   }
 
@@ -114,11 +114,11 @@ MapFieldGenerator::MapFieldGenerator(const FieldDescriptor* descriptor)
   }
   variables_["fieldflags"] = BuildFlagsString(field_flags);
 
-  ObjectiveCType value_objc_type = GetObjectiveCType(value_descriptor);
-  if ((GetObjectiveCType(key_descriptor) == OBJECTIVECTYPE_STRING) &&
-      ((value_objc_type == OBJECTIVECTYPE_STRING) ||
-       (value_objc_type == OBJECTIVECTYPE_DATA) ||
-       (value_objc_type == OBJECTIVECTYPE_MESSAGE))) {
+  SwiftType value_objc_type = GetSwiftType(value_descriptor);
+  if ((GetSwiftType(key_descriptor) == SWIFTTYPE_STRING) &&
+      ((value_objc_type == SWIFTTYPE_STRING) ||
+       (value_objc_type == SWIFTTYPE_DATA) ||
+       (value_objc_type == SWIFTTYPE_MESSAGE))) {
     variables_["array_storage_type"] = "NSMutableDictionary";
   } else {
     string base_name = MapEntryTypeName(key_descriptor, true);
@@ -136,11 +136,11 @@ void MapFieldGenerator::FinishInitialization(void) {
   // values in the map are.
   const FieldDescriptor* value_descriptor =
       descriptor_->message_type()->FindFieldByName("value");
-  ObjectiveCType value_objc_type = GetObjectiveCType(value_descriptor);
-  if ((value_objc_type == OBJECTIVECTYPE_MESSAGE) ||
-      (value_objc_type == OBJECTIVECTYPE_DATA) ||
-      (value_objc_type == OBJECTIVECTYPE_STRING) ||
-      (value_objc_type == OBJECTIVECTYPE_ENUM)) {
+  SwiftType value_objc_type = GetSwiftType(value_descriptor);
+  if ((value_objc_type == SWIFTTYPE_MESSAGE) ||
+      (value_objc_type == SWIFTTYPE_DATA) ||
+      (value_objc_type == SWIFTTYPE_STRING) ||
+      (value_objc_type == SWIFTTYPE_ENUM)) {
     variables_["array_comment"] =
         "// |" + variables_["name"] + "| values are |" + value_field_generator_->variable("storage_type") + "|\n";
   } else {
@@ -155,7 +155,7 @@ void MapFieldGenerator::GenerateFieldDescriptionTypeSpecific(
   value_field_generator_->GenerateFieldDescriptionTypeSpecific(printer);
 }
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

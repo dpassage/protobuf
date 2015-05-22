@@ -395,12 +395,28 @@ libprotoc_la_SOURCES =                                         \
   google/protobuf/compiler/csharp/csharp_writer.h              \
   google/protobuf/compiler/swift/swift_enum.cc                 \
   google/protobuf/compiler/swift/swift_enum.h                  \
+  google/protobuf/compiler/swift/swift_enum_field.cc           \
+  google/protobuf/compiler/swift/swift_enum_field.h            \
+  google/protobuf/compiler/swift/swift_extension.cc            \
+  google/protobuf/compiler/swift/swift_extension.h             \
+  google/protobuf/compiler/swift/swift_field.cc                \
+  google/protobuf/compiler/swift/swift_field.h                 \
   google/protobuf/compiler/swift/swift_file.cc                 \
   google/protobuf/compiler/swift/swift_file.h                  \
   google/protobuf/compiler/swift/swift_generator.cc            \
   google/protobuf/compiler/swift/swift_generator.h             \
   google/protobuf/compiler/swift/swift_helpers.cc              \
-  google/protobuf/compiler/swift/swift_helpers.h
+  google/protobuf/compiler/swift/swift_helpers.h               \
+  google/protobuf/compiler/swift/swift_map_field.cc            \
+  google/protobuf/compiler/swift/swift_map_field.h             \
+  google/protobuf/compiler/swift/swift_message.cc              \
+  google/protobuf/compiler/swift/swift_message.h               \
+  google/protobuf/compiler/swift/swift_message_field.cc        \
+  google/protobuf/compiler/swift/swift_message_field.h         \
+  google/protobuf/compiler/swift/swift_primitive_field.cc      \
+  google/protobuf/compiler/swift/swift_primitive_field.h       \
+  google/protobuf/compiler/swift/swift_oneof.cc                \
+  google/protobuf/compiler/swift/swift_oneof.h
 
 bin_PROGRAMS = protoc
 protoc_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la

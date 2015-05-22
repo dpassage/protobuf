@@ -28,17 +28,17 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ENUM_FIELD_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ENUM_FIELD_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_FIELD_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_FIELD_H__
 
 #include <map>
 #include <string>
-#include <google/protobuf/compiler/objectivec/objectivec_field.h>
+#include <google/protobuf/compiler/swift/swift_field.h>
 
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 class EnumFieldGenerator : public SingleFieldGenerator {
   friend FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field);
@@ -70,8 +70,8 @@ class RepeatedEnumFieldGenerator : public RepeatedFieldGenerator {
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(RepeatedEnumFieldGenerator);
 };
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ENUM_FIELD_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_FIELD_H__

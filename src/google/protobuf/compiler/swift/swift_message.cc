@@ -33,10 +33,10 @@
 #include <sstream>
 
 #include <google/protobuf/stubs/hash.h>
-#include <google/protobuf/compiler/objectivec/objectivec_message.h>
-#include <google/protobuf/compiler/objectivec/objectivec_enum.h>
-#include <google/protobuf/compiler/objectivec/objectivec_extension.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_message.h>
+#include <google/protobuf/compiler/swift/swift_enum.h>
+#include <google/protobuf/compiler/swift/swift_extension.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/stubs/stl_util.h>
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/io/printer.h>
@@ -49,7 +49,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 using internal::WireFormat;
 using internal::WireFormatLite;
@@ -637,7 +637,7 @@ void MessageGenerator::GenerateSource(io::Printer* printer) {
   }
 }
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

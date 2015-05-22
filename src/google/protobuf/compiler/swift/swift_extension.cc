@@ -30,8 +30,8 @@
 
 #include <iostream>
 
-#include <google/protobuf/compiler/objectivec/objectivec_extension.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_extension.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/io/printer.h>
@@ -39,7 +39,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 ExtensionGenerator::ExtensionGenerator(const string& root_class_name,
                                        const FieldDescriptor* descriptor)
@@ -54,8 +54,8 @@ ExtensionGenerator::ExtensionGenerator(const string& root_class_name,
   } else {
     // Extensions that add a Message field also require that field be allowed
     // by the filter, or they aren't usable.
-    ObjectiveCType objc_type = GetObjectiveCType(descriptor_);
-    if (objc_type == OBJECTIVECTYPE_MESSAGE) {
+    SwiftType objc_type = GetSwiftType(descriptor_);
+    if (objc_type == SWIFTTYPE_MESSAGE) {
       const string message_class_name(ClassName(descriptor_->message_type()));
       if (FilterClass(message_class_name)) {
         filter_reason_ = string("Extension |") + root_class_and_method_name_ +
@@ -113,9 +113,9 @@ void ExtensionGenerator::GenerateStaticVariablesInitialization(
 
   vars["options"] = BuildFlagsString(options);
 
-  ObjectiveCType objc_type = GetObjectiveCType(descriptor_);
+  SwiftType objc_type = GetSwiftType(descriptor_);
   string singular_type;
-  if (objc_type == OBJECTIVECTYPE_MESSAGE) {
+  if (objc_type == SWIFTTYPE_MESSAGE) {
     vars["type"] = string("GPBStringifySymbol(") +
                    ClassName(descriptor_->message_type()) + ")";
   } else {
@@ -131,7 +131,7 @@ void ExtensionGenerator::GenerateStaticVariablesInitialization(
   string type = GetCapitalizedType(descriptor_);
   vars["extension_type"] = string("GPBType") + type;
 
-  if (objc_type == OBJECTIVECTYPE_ENUM) {
+  if (objc_type == SWIFTTYPE_ENUM) {
     vars["enum_desc_func_name"] =
          EnumName(descriptor_->enum_type()) + "_EnumDescriptor";
   } else {
@@ -159,7 +159,7 @@ void ExtensionGenerator::GenerateRegistrationSource(io::Printer* printer) {
       "[registry addExtension:$root_class_and_method_name$];\n",
       "root_class_and_method_name", root_class_and_method_name_);
 }
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

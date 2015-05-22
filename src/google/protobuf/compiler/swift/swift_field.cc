@@ -28,12 +28,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <google/protobuf/compiler/objectivec/objectivec_field.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
-#include <google/protobuf/compiler/objectivec/objectivec_enum_field.h>
-#include <google/protobuf/compiler/objectivec/objectivec_map_field.h>
-#include <google/protobuf/compiler/objectivec/objectivec_message_field.h>
-#include <google/protobuf/compiler/objectivec/objectivec_primitive_field.h>
+#include <google/protobuf/compiler/swift/swift_field.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
+#include <google/protobuf/compiler/swift/swift_enum_field.h>
+#include <google/protobuf/compiler/swift/swift_map_field.h>
+#include <google/protobuf/compiler/swift/swift_message_field.h>
+#include <google/protobuf/compiler/swift/swift_primitive_field.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/wire_format.h>
 #include <google/protobuf/stubs/common.h>
@@ -42,7 +42,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 namespace {
 void SetCommonFieldVariables(const FieldDescriptor* descriptor,
@@ -128,12 +128,12 @@ class EmptyFieldGenerator : public FieldGenerator {
   virtual void GeneratePropertyDeclaration(io::Printer* printer) const {
     string name = FieldName(descriptor_);
     string type;
-    switch (GetObjectiveCType(descriptor_)) {
-      case OBJECTIVECTYPE_MESSAGE:
+    switch (GetSwiftType(descriptor_)) {
+      case SWIFTTYPE_MESSAGE:
         type = ClassName(descriptor_->message_type()) + " *";
         break;
 
-      case OBJECTIVECTYPE_ENUM:
+      case SWIFTTYPE_ENUM:
         type = EnumName(descriptor_->enum_type()) + " ";
         break;
 
@@ -161,8 +161,8 @@ class EmptyFieldGenerator : public FieldGenerator {
 FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field) {
   FieldGenerator* result = NULL;
   if (field->is_repeated()) {
-    switch (GetObjectiveCType(field)) {
-      case OBJECTIVECTYPE_MESSAGE: {
+    switch (GetSwiftType(field)) {
+      case SWIFTTYPE_MESSAGE: {
         string type = ClassName(field->message_type());
         if (FilterClass(type)) {
           string reason =
@@ -175,7 +175,7 @@ FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field) {
         }
         break;
       }
-      case OBJECTIVECTYPE_ENUM:
+      case SWIFTTYPE_ENUM:
         result = new RepeatedEnumFieldGenerator(field);
         break;
       default:
@@ -183,8 +183,8 @@ FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field) {
         break;
     }
   } else {
-    switch (GetObjectiveCType(field)) {
-      case OBJECTIVECTYPE_MESSAGE: {
+    switch (GetSwiftType(field)) {
+      case SWIFTTYPE_MESSAGE: {
         string type = ClassName(field->message_type());
         if (FilterClass(type)) {
           string reason =
@@ -195,7 +195,7 @@ FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field) {
         }
         break;
       }
-      case OBJECTIVECTYPE_ENUM:
+      case SWIFTTYPE_ENUM:
         result = new EnumFieldGenerator(field);
         break;
       default:
@@ -464,7 +464,7 @@ void FieldGeneratorMap::SetOneofIndexBase(int index_base) {
   }
 }
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

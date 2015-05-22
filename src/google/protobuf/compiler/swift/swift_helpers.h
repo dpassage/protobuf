@@ -58,7 +58,7 @@ bool IsInitName(const string& name);
 string FileName(const FileDescriptor* file);
 
 // Gets the path of the file we're going to generate (sans the .pb.h
-// extension).  The path will be dependent on the objectivec package
+// extension).  The path will be dependent on the swift package
 // declared in the proto package.
 string FilePath(const FileDescriptor* file);
 
@@ -110,26 +110,26 @@ inline bool IsMapEntryMessage(const Descriptor* descriptor) {
 // Reverse of the above.
 string UnCamelCaseFieldName(const string& name, const FieldDescriptor* field);
 
-enum ObjectiveCType {
-  OBJECTIVECTYPE_INT32,
-  OBJECTIVECTYPE_UINT32,
-  OBJECTIVECTYPE_INT64,
-  OBJECTIVECTYPE_UINT64,
-  OBJECTIVECTYPE_FLOAT,
-  OBJECTIVECTYPE_DOUBLE,
-  OBJECTIVECTYPE_BOOLEAN,
-  OBJECTIVECTYPE_STRING,
-  OBJECTIVECTYPE_DATA,
-  OBJECTIVECTYPE_ENUM,
-  OBJECTIVECTYPE_MESSAGE
+enum SwiftType {
+  SWIFTTYPE_INT32,
+  SWIFTTYPE_UINT32,
+  SWIFTTYPE_INT64,
+  SWIFTTYPE_UINT64,
+  SWIFTTYPE_FLOAT,
+  SWIFTTYPE_DOUBLE,
+  SWIFTTYPE_BOOLEAN,
+  SWIFTTYPE_STRING,
+  SWIFTTYPE_DATA,
+  SWIFTTYPE_ENUM,
+  SWIFTTYPE_MESSAGE
 };
 
 string GetCapitalizedType(const FieldDescriptor* field);
 
-ObjectiveCType GetObjectiveCType(FieldDescriptor::Type field_type);
+SwiftType GetSwiftType(FieldDescriptor::Type field_type);
 
-inline ObjectiveCType GetObjectiveCType(const FieldDescriptor* field) {
-  return GetObjectiveCType(field->type());
+inline SwiftType GetSwiftType(const FieldDescriptor* field) {
+  return GetSwiftType(field->type());
 }
 
 bool IsPrimitiveType(const FieldDescriptor* field);

@@ -1,5 +1,5 @@
 // Protocol Buffers - Google's data interchange format
-// Copyright 2015 Google Inc.  All rights reserved.
+// Copyright 2008 Google Inc.  All rights reserved.
 // https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,37 +28,55 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MAP_FIELD_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MAP_FIELD_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_PRIMITIVE_FIELD_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_PRIMITIVE_FIELD_H__
 
 #include <map>
 #include <string>
-#include <google/protobuf/compiler/objectivec/objectivec_field.h>
+#include <google/protobuf/compiler/swift/swift_field.h>
 
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
-class MapFieldGenerator : public RepeatedFieldGenerator {
+class PrimitiveFieldGenerator : public SingleFieldGenerator {
   friend FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field);
 
- public:
-  virtual void FinishInitialization(void);
-  virtual void GenerateFieldDescriptionTypeSpecific(io::Printer* printer) const;
-
  protected:
-  MapFieldGenerator(const FieldDescriptor* descriptor);
-  virtual ~MapFieldGenerator();
+  PrimitiveFieldGenerator(const FieldDescriptor* descriptor);
+  virtual ~PrimitiveFieldGenerator();
 
  private:
-  scoped_ptr<FieldGenerator> value_field_generator_;
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MapFieldGenerator);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(PrimitiveFieldGenerator);
 };
 
-}  // namespace objectivec
+class PrimitiveObjFieldGenerator : public ObjCObjFieldGenerator {
+  friend FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field);
+
+ protected:
+  PrimitiveObjFieldGenerator(const FieldDescriptor* descriptor);
+  virtual ~PrimitiveObjFieldGenerator();
+
+ private:
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(PrimitiveObjFieldGenerator);
+};
+
+class RepeatedPrimitiveFieldGenerator : public RepeatedFieldGenerator {
+  friend FieldGenerator* FieldGenerator::Make(const FieldDescriptor* field);
+
+ protected:
+  RepeatedPrimitiveFieldGenerator(const FieldDescriptor* descriptor);
+  virtual ~RepeatedPrimitiveFieldGenerator();
+  virtual void FinishInitialization(void);
+
+ private:
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(RepeatedPrimitiveFieldGenerator);
+};
+
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
 
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MAP_FIELD_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_PRIMITIVE_FIELD_H__
