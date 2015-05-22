@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		2CFB390415C718CE00CBF84D /* Descriptor.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD3982214BE5B0C0081D629 /* Descriptor.pbobjc.m */; };
 		5102DABC1891A073002037B6 /* GPBConcurrencyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5102DABB1891A052002037B6 /* GPBConcurrencyTests.m */; };
+		6B6E3B3F1B0F0AA5009CD2D8 /* ProtobufMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6E3B3E1B0F0AA5009CD2D8 /* ProtobufMessage.swift */; };
 		7461B5360F94FB4600A0C422 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		7461B53C0F94FB4E00A0C422 /* GPBCodedInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 7461B48F0F94F99000A0C422 /* GPBCodedInputStream.m */; };
 		7461B53D0F94FB4E00A0C422 /* GPBCodedOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 7461B4910F94F99000A0C422 /* GPBCodedOutputStream.m */; };
@@ -96,6 +97,8 @@
 		51457B5F18D0B7AF00CCC606 /* GPBCodedInputStream_PackagePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPBCodedInputStream_PackagePrivate.h; sourceTree = "<group>"; };
 		515B840C18B7DEE30031753B /* GPBDescriptor_PackagePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPBDescriptor_PackagePrivate.h; sourceTree = "<group>"; };
 		5196A06918CE16B000B759E2 /* GPBMessage_PackagePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPBMessage_PackagePrivate.h; sourceTree = "<group>"; };
+		6B6E3B3D1B0F0AA4009CD2D8 /* ProtocolBuffers-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProtocolBuffers-Bridging-Header.h"; sourceTree = "<group>"; };
+		6B6E3B3E1B0F0AA5009CD2D8 /* ProtobufMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtobufMessage.swift; sourceTree = "<group>"; };
 		7401C1A90F950347006D8281 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		7461B48D0F94F99000A0C422 /* GPBBootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBBootstrap.h; sourceTree = "<group>"; };
 		7461B48E0F94F99000A0C422 /* GPBCodedInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPBCodedInputStream.h; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 				7461B5150F94FA7300A0C422 /* Messages */,
 				8BCF334414ED727300BC5317 /* Support */,
 				29B97315FDCFA39411CA2CEA /* Generated */,
+				6B6E3B3E1B0F0AA5009CD2D8 /* ProtobufMessage.swift */,
+				6B6E3B3D1B0F0AA4009CD2D8 /* ProtocolBuffers-Bridging-Header.h */,
 			);
 			name = "Core Source";
 			sourceTree = "<group>";
@@ -620,6 +625,7 @@
 				F401DC2D1A8D444600FCC765 /* GPBArray.m in Sources */,
 				7461B5490F94FB4E00A0C422 /* GPBExtensionRegistry.m in Sources */,
 				7461B54C0F94FB4E00A0C422 /* GPBField.m in Sources */,
+				6B6E3B3F1B0F0AA5009CD2D8 /* ProtobufMessage.swift in Sources */,
 				7461B5530F94FB4E00A0C422 /* GPBMessage.m in Sources */,
 				7461B5610F94FB4E00A0C422 /* GPBUnknownFieldSet.m in Sources */,
 				7461B5630F94FB4E00A0C422 /* GPBUtilities.m in Sources */,
@@ -692,18 +698,25 @@
 		7461B52F0F94FAFA00A0C422 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = ProtocolBuffers;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProtocolBuffers-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		7461B5300F94FAFA00A0C422 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = ProtocolBuffers;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProtocolBuffers-Bridging-Header.h";
 			};
 			name = Release;
 		};
