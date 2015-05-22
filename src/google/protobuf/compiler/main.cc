@@ -38,6 +38,7 @@
 #include <google/protobuf/compiler/ruby/ruby_generator.h>
 #include <google/protobuf/compiler/csharp/csharp_generator.h>
 #include <google/protobuf/compiler/objectivec/objectivec_generator.h>
+#include <google/protobuf/compiler/swift/swift_generator.h>
 
 int main(int argc, char* argv[]) {
 
@@ -79,6 +80,11 @@ int main(int argc, char* argv[]) {
   google::protobuf::compiler::objectivec::ObjectiveCGenerator objc_generator;
   cli.RegisterGenerator("--objc_out", &objc_generator,
                         "Generate Objective C header and source.");
+
+  // Swift
+  google::protobuf::compiler::swift::SwiftGenerator swift_generator;
+  cli.RegisterGenerator("--swift_out", &swift_generator,
+                        "Generate Swift source.");
 
   return cli.Run(argc, argv);
 }

@@ -90,3 +90,9 @@ objectivec/ProtocolBuffers_OSX.xcodeproj/project.xcworkspace/xcuserdata/
 objectivec/ProtocolBuffers_OSX.xcodeproj/xcuserdata/
 objectivec/ProtocolBuffers_iOS.xcodeproj/project.xcworkspace/xcuserdata/
 objectivec/ProtocolBuffers_iOS.xcodeproj/xcuserdata/
+
+# Directories created by opening the Swift Xcode projects.
+swift/ProtocolBuffers_OSX.xcodeproj/project.xcworkspace/xcuserdata/
+swift/ProtocolBuffers_OSX.xcodeproj/xcuserdata/
+swift/ProtocolBuffers_iOS.xcodeproj/project.xcworkspace/xcuserdata/
+swift/ProtocolBuffers_iOS.xcodeproj/xcuserdata/
