@@ -28,12 +28,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_FIELD_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_FIELD_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_FIELD_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_FIELD_H__
 
 #include <map>
 #include <string>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/descriptor.h>
 
@@ -45,7 +45,7 @@ class Printer;  // printer.h
 }  // namespace io
 
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 class FieldGenerator {
  public:
@@ -159,8 +159,8 @@ class FieldGeneratorMap {
 
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(FieldGeneratorMap);
 };
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_FIELD_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_FIELD_H__

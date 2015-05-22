@@ -28,15 +28,15 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MESSAGE_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MESSAGE_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_H__
 
 #include <string>
 #include <set>
 #include <vector>
-#include <google/protobuf/compiler/objectivec/objectivec_field.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
-#include <google/protobuf/compiler/objectivec/objectivec_oneof.h>
+#include <google/protobuf/compiler/swift/swift_field.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
+#include <google/protobuf/compiler/swift/swift_oneof.h>
 #include <google/protobuf/stubs/common.h>
 
 namespace google {
@@ -47,7 +47,7 @@ class Printer;  // printer.h
 }  // namespace io
 
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 class ExtensionGenerator;
 class EnumGenerator;
@@ -96,8 +96,8 @@ class MessageGenerator {
 
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MessageGenerator);
 };
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MESSAGE_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_H__

@@ -34,7 +34,7 @@
 #include <vector>
 
 #include <google/protobuf/stubs/hash.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -46,7 +46,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 namespace {
 
@@ -564,64 +564,64 @@ string GetCapitalizedType(const FieldDescriptor* field) {
   return NULL;
 }
 
-ObjectiveCType GetObjectiveCType(FieldDescriptor::Type field_type) {
+SwiftType GetSwiftType(FieldDescriptor::Type field_type) {
   switch (field_type) {
     case FieldDescriptor::TYPE_INT32:
     case FieldDescriptor::TYPE_SINT32:
     case FieldDescriptor::TYPE_SFIXED32:
-      return OBJECTIVECTYPE_INT32;
+      return SWIFTTYPE_INT32;
 
     case FieldDescriptor::TYPE_UINT32:
     case FieldDescriptor::TYPE_FIXED32:
-      return OBJECTIVECTYPE_UINT32;
+      return SWIFTTYPE_UINT32;
 
     case FieldDescriptor::TYPE_INT64:
     case FieldDescriptor::TYPE_SINT64:
     case FieldDescriptor::TYPE_SFIXED64:
-      return OBJECTIVECTYPE_INT64;
+      return SWIFTTYPE_INT64;
 
     case FieldDescriptor::TYPE_UINT64:
     case FieldDescriptor::TYPE_FIXED64:
-      return OBJECTIVECTYPE_UINT64;
+      return SWIFTTYPE_UINT64;
 
     case FieldDescriptor::TYPE_FLOAT:
-      return OBJECTIVECTYPE_FLOAT;
+      return SWIFTTYPE_FLOAT;
 
     case FieldDescriptor::TYPE_DOUBLE:
-      return OBJECTIVECTYPE_DOUBLE;
+      return SWIFTTYPE_DOUBLE;
 
     case FieldDescriptor::TYPE_BOOL:
-      return OBJECTIVECTYPE_BOOLEAN;
+      return SWIFTTYPE_BOOLEAN;
 
     case FieldDescriptor::TYPE_STRING:
-      return OBJECTIVECTYPE_STRING;
+      return SWIFTTYPE_STRING;
 
     case FieldDescriptor::TYPE_BYTES:
-      return OBJECTIVECTYPE_DATA;
+      return SWIFTTYPE_DATA;
 
     case FieldDescriptor::TYPE_ENUM:
-      return OBJECTIVECTYPE_ENUM;
+      return SWIFTTYPE_ENUM;
 
     case FieldDescriptor::TYPE_GROUP:
     case FieldDescriptor::TYPE_MESSAGE:
-      return OBJECTIVECTYPE_MESSAGE;
+      return SWIFTTYPE_MESSAGE;
   }
 
   GOOGLE_LOG(FATAL) << "Can't get here.";
-  return OBJECTIVECTYPE_INT32;
+  return SWIFTTYPE_INT32;
 }
 
 bool IsPrimitiveType(const FieldDescriptor* field) {
-  ObjectiveCType type = GetObjectiveCType(field);
+  SwiftType type = GetSwiftType(field);
   switch (type) {
-    case OBJECTIVECTYPE_INT32:
-    case OBJECTIVECTYPE_UINT32:
-    case OBJECTIVECTYPE_INT64:
-    case OBJECTIVECTYPE_UINT64:
-    case OBJECTIVECTYPE_FLOAT:
-    case OBJECTIVECTYPE_DOUBLE:
-    case OBJECTIVECTYPE_BOOLEAN:
-    case OBJECTIVECTYPE_ENUM:
+    case SWIFTTYPE_INT32:
+    case SWIFTTYPE_UINT32:
+    case SWIFTTYPE_INT64:
+    case SWIFTTYPE_UINT64:
+    case SWIFTTYPE_FLOAT:
+    case SWIFTTYPE_DOUBLE:
+    case SWIFTTYPE_BOOLEAN:
+    case SWIFTTYPE_ENUM:
       return true;
       break;
     default:
@@ -1056,7 +1056,7 @@ string TextFormatDecodeData::DecodeDataForString(const string& input_for_decode,
   return builder.Finish() + (char)'\0';
 }
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

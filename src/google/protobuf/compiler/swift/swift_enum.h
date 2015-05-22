@@ -28,14 +28,16 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_EXTENSION_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_EXTENSION_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_H__
 
-#include <google/protobuf/stubs/common.h>
+#include <string>
+#include <set>
+#include <vector>
+#include <google/protobuf/descriptor.h>
 
 namespace google {
 namespace protobuf {
-class FieldDescriptor;  // descriptor.h
 namespace io {
 class Printer;  // printer.h
 }
@@ -43,31 +45,29 @@ class Printer;  // printer.h
 
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
-class ExtensionGenerator {
+class EnumGenerator {
  public:
-  explicit ExtensionGenerator(const string& root_class_name,
-                              const FieldDescriptor* descriptor);
-  ~ExtensionGenerator();
+  EnumGenerator(const EnumDescriptor* descriptor);
+  ~EnumGenerator();
 
-  void GenerateMembersHeader(io::Printer* printer);
-  void GenerateStaticVariablesInitialization(io::Printer* printer,
-                                             bool* out_generated, bool root);
-  void GenerateRegistrationSource(io::Printer* printer);
+  void GenerateHeader(io::Printer* printer);
+  void GenerateSource(io::Printer* printer);
 
-  bool IsFiltered() const { return filter_reason_.length() > 0; }
+  const string& name() const { return name_; }
 
  private:
-  string method_name_;
-  string root_class_and_method_name_;
-  string filter_reason_;
-  const FieldDescriptor* descriptor_;
+  const EnumDescriptor* descriptor_;
+  vector<const EnumValueDescriptor*> base_values_;
+  vector<const EnumValueDescriptor*> all_values_;
+  const string name_;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ExtensionGenerator);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EnumGenerator);
 };
-}  // namespace objectivec
+
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_MESSAGE_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_H__

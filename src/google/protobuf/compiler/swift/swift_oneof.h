@@ -28,33 +28,50 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Generates ObjectiveC code for a given .proto file.
-
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_GENERATOR_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_GENERATOR_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_ONEOF_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_ONEOF_H__
 
 #include <string>
-#include <google/protobuf/compiler/code_generator.h>
+#include <set>
+#include <vector>
+#include <google/protobuf/descriptor.h>
 
 namespace google {
 namespace protobuf {
+namespace io {
+class Printer;  // printer.h
+}
+}
+
+namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
-class LIBPROTOC_EXPORT ObjectiveCGenerator : public CodeGenerator {
+class OneofGenerator {
  public:
-  ObjectiveCGenerator();
-  ~ObjectiveCGenerator();
+  OneofGenerator(const OneofDescriptor* descriptor);
+  ~OneofGenerator();
 
-  // implements CodeGenerator ----------------------------------------
-  bool Generate(const FileDescriptor* file, const string& parameter,
-                OutputDirectory* output_directory, string* error) const;
+  void SetOneofIndexBase(int index_base);
+
+  void GenerateCaseEnum(io::Printer* printer);
+
+  void GeneratePublicCasePropertyDeclaration(io::Printer* printer);
+  void GenerateClearFunctionDeclaration(io::Printer* printer);
+
+  void GeneratePropertyImplementation(io::Printer* printer);
+  void GenerateClearFunctionImplementation(io::Printer* printer);
+  void GenerateDescription(io::Printer* printer);
 
  private:
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ObjectiveCGenerator);
+  const OneofDescriptor* descriptor_;
+  map<string, string> variables_;
+
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(OneofGenerator);
 };
-}  // namespace objectivec
+
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_GENERATOR_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_ONEOF_H__

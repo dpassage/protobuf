@@ -28,16 +28,18 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ENUM_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ENUM_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_FILE_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_FILE_H__
 
 #include <string>
 #include <set>
 #include <vector>
-#include <google/protobuf/descriptor.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
+#include <google/protobuf/stubs/common.h>
 
 namespace google {
 namespace protobuf {
+class FileDescriptor;  // descriptor.h
 namespace io {
 class Printer;  // printer.h
 }
@@ -45,29 +47,48 @@ class Printer;  // printer.h
 
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
-class EnumGenerator {
+class EnumGenerator;
+class ExtensionGenerator;
+class MessageGenerator;
+
+class FileGenerator {
  public:
-  EnumGenerator(const EnumDescriptor* descriptor);
-  ~EnumGenerator();
+  explicit FileGenerator(const FileDescriptor* file);
+  ~FileGenerator();
 
-  void GenerateHeader(io::Printer* printer);
   void GenerateSource(io::Printer* printer);
+  void GenerateHeader(io::Printer* printer);
 
-  const string& name() const { return name_; }
+  const string& RootClassName() const { return root_class_name_; }
+  const string Path() const;
+
+  bool IsFiltered() const { return is_filtered_; }
+  bool AreAllExtensionsFiltered() const { return all_extensions_filtered_; }
 
  private:
-  const EnumDescriptor* descriptor_;
-  vector<const EnumValueDescriptor*> base_values_;
-  vector<const EnumValueDescriptor*> all_values_;
-  const string name_;
+  const FileDescriptor* file_;
+  string root_class_name_;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EnumGenerator);
+  // Access this field through the DependencyGenerators accessor call below.
+  // Do not reference it directly.
+  vector<FileGenerator*> dependency_generators_;
+
+  vector<EnumGenerator*> enum_generators_;
+  vector<MessageGenerator*> message_generators_;
+  vector<ExtensionGenerator*> extension_generators_;
+  bool is_filtered_;
+  bool all_extensions_filtered_;
+
+  void DetermineDependencies(set<string>* dependencies);
+
+  const vector<FileGenerator*>& DependencyGenerators();
+
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(FileGenerator);
 };
-
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ENUM_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_FILE_H__

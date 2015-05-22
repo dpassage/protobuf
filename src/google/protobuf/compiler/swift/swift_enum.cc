@@ -31,8 +31,8 @@
 #include <map>
 #include <string>
 
-#include <google/protobuf/compiler/objectivec/objectivec_enum.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_enum.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/stubs/strutil.h>
@@ -40,7 +40,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 EnumGenerator::EnumGenerator(const EnumDescriptor* descriptor)
     : descriptor_(descriptor),
@@ -193,7 +193,7 @@ void EnumGenerator::GenerateSource(io::Printer* printer) {
       "  }\n"
       "}\n\n");
 }
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

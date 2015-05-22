@@ -28,8 +28,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_HELPERS_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_HELPERS_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_HELPERS_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_HELPERS_H__
 
 #include <string>
 #include <vector>
@@ -40,7 +40,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
 // Strips ".proto" or ".protodevel" from the end of a filename.
 string StripProto(const string& filename);
@@ -166,8 +166,8 @@ class TextFormatDecodeData {
   vector<DataEntry> entries_;
 };
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_HELPERS_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_HELPERS_H__

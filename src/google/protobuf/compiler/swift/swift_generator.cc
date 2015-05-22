@@ -29,9 +29,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <iostream>
-#include <google/protobuf/compiler/objectivec/objectivec_generator.h>
-#include <google/protobuf/compiler/objectivec/objectivec_file.h>
-#include <google/protobuf/compiler/objectivec/objectivec_helpers.h>
+#include <google/protobuf/compiler/swift/swift_generator.h>
+#include <google/protobuf/compiler/swift/swift_file.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -40,17 +40,17 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
-ObjectiveCGenerator::ObjectiveCGenerator() {}
+SwiftGenerator::SwiftGenerator() {}
 
-ObjectiveCGenerator::~ObjectiveCGenerator() {}
+SwiftGenerator::~SwiftGenerator() {}
 
-bool ObjectiveCGenerator::Generate(const FileDescriptor* file,
+bool SwiftGenerator::Generate(const FileDescriptor* file,
                                    const string& parameter,
                                    OutputDirectory* output_directory,
                                    string* error) const {
-  // ObjC doesn't have any options at the moment, error if passed one.
+  // Swift doesn't have any options at the moment, error if passed one.
   vector<pair<string, string> > options;
   ParseGeneratorParameter(parameter, &options);
   for (int i = 0; i < options.size(); i++) {
@@ -66,18 +66,10 @@ bool ObjectiveCGenerator::Generate(const FileDescriptor* file,
 
   string filepath = FilePath(file);
 
-  // Generate header.
+  // Generate Swift file.
   {
     scoped_ptr<io::ZeroCopyOutputStream> output(
-        output_directory->Open(filepath + ".pbobjc.h"));
-    io::Printer printer(output.get(), '$');
-    file_generator.GenerateHeader(&printer);
-  }
-
-  // Generate m file.
-  {
-    scoped_ptr<io::ZeroCopyOutputStream> output(
-        output_directory->Open(filepath + ".pbobjc.m"));
+        output_directory->Open(filepath + ".pb.swift"));
     io::Printer printer(output.get(), '$');
     file_generator.GenerateSource(&printer);
   }
@@ -85,7 +77,7 @@ bool ObjectiveCGenerator::Generate(const FileDescriptor* file,
   return true;
 }
 
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

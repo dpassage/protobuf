@@ -28,10 +28,10 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <google/protobuf/compiler/objectivec/objectivec_file.h>
-#include <google/protobuf/compiler/objectivec/objectivec_enum.h>
-#include <google/protobuf/compiler/objectivec/objectivec_extension.h>
-#include <google/protobuf/compiler/objectivec/objectivec_message.h>
+#include <google/protobuf/compiler/swift/swift_file.h>
+#include <google/protobuf/compiler/swift/swift_enum.h>
+#include <google/protobuf/compiler/swift/swift_extension.h>
+#include <google/protobuf/compiler/swift/swift_message.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -49,7 +49,7 @@ namespace protobuf {
 const int32 GOOGLE_PROTOBUF_OBJC_GEN_VERSION = 30000;
 
 namespace compiler {
-namespace objectivec {
+namespace swift {
 FileGenerator::FileGenerator(const FileDescriptor *file)
     : file_(file),
       root_class_name_(FileClassName(file)),
@@ -387,7 +387,7 @@ const vector<FileGenerator *> &FileGenerator::DependencyGenerators() {
   }
   return dependency_generators_;
 }
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

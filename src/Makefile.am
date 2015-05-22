@@ -392,7 +392,15 @@ libprotoc_la_SOURCES =                                         \
   google/protobuf/compiler/csharp/csharp_umbrella_class.cc     \
   google/protobuf/compiler/csharp/csharp_umbrella_class.h      \
   google/protobuf/compiler/csharp/csharp_writer.cc             \
-  google/protobuf/compiler/csharp/csharp_writer.h
+  google/protobuf/compiler/csharp/csharp_writer.h              \
+  google/protobuf/compiler/swift/swift_enum.cc                 \
+  google/protobuf/compiler/swift/swift_enum.h                  \
+  google/protobuf/compiler/swift/swift_file.cc                 \
+  google/protobuf/compiler/swift/swift_file.h                  \
+  google/protobuf/compiler/swift/swift_generator.cc            \
+  google/protobuf/compiler/swift/swift_generator.h             \
+  google/protobuf/compiler/swift/swift_helpers.cc              \
+  google/protobuf/compiler/swift/swift_helpers.h
 
 bin_PROGRAMS = protoc
 protoc_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la

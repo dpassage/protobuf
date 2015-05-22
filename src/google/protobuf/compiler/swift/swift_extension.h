@@ -28,16 +28,14 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ONEOF_H__
-#define GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ONEOF_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_EXTENSION_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_EXTENSION_H__
 
-#include <string>
-#include <set>
-#include <vector>
-#include <google/protobuf/descriptor.h>
+#include <google/protobuf/stubs/common.h>
 
 namespace google {
 namespace protobuf {
+class FieldDescriptor;  // descriptor.h
 namespace io {
 class Printer;  // printer.h
 }
@@ -45,33 +43,31 @@ class Printer;  // printer.h
 
 namespace protobuf {
 namespace compiler {
-namespace objectivec {
+namespace swift {
 
-class OneofGenerator {
+class ExtensionGenerator {
  public:
-  OneofGenerator(const OneofDescriptor* descriptor);
-  ~OneofGenerator();
+  explicit ExtensionGenerator(const string& root_class_name,
+                              const FieldDescriptor* descriptor);
+  ~ExtensionGenerator();
 
-  void SetOneofIndexBase(int index_base);
+  void GenerateMembersHeader(io::Printer* printer);
+  void GenerateStaticVariablesInitialization(io::Printer* printer,
+                                             bool* out_generated, bool root);
+  void GenerateRegistrationSource(io::Printer* printer);
 
-  void GenerateCaseEnum(io::Printer* printer);
-
-  void GeneratePublicCasePropertyDeclaration(io::Printer* printer);
-  void GenerateClearFunctionDeclaration(io::Printer* printer);
-
-  void GeneratePropertyImplementation(io::Printer* printer);
-  void GenerateClearFunctionImplementation(io::Printer* printer);
-  void GenerateDescription(io::Printer* printer);
+  bool IsFiltered() const { return filter_reason_.length() > 0; }
 
  private:
-  const OneofDescriptor* descriptor_;
-  map<string, string> variables_;
+  string method_name_;
+  string root_class_and_method_name_;
+  string filter_reason_;
+  const FieldDescriptor* descriptor_;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(OneofGenerator);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ExtensionGenerator);
 };
-
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_OBJECTIVEC_ONEOF_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_H__

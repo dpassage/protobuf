@@ -53,8 +53,8 @@ class LIBPROTOC_EXPORT SwiftGenerator : public CodeGenerator {
  private:
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(SwiftGenerator);
 };
-}  // namespace objectivec
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_Swift_GENERATOR_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_GENERATOR_H__
