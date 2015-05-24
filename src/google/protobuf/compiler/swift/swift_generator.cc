@@ -182,39 +182,32 @@ bool SwiftGenerator::Generate(const FileDescriptor* file,
     return false;
   }
 
-  string package_dir =
-    StringReplace(file_generator.java_package(), ".", "/", true);
-  if (!package_dir.empty()) package_dir += "/";
-
   vector<string> all_files;
 
-  if (IsOuterClassNeeded(params, file)) {
-    string java_filename = package_dir;
-    java_filename += file_generator.classname();
-    java_filename += ".java";
-    all_files.push_back(java_filename);
+  string swift_filename = file_generator.classname();
+  swift_filename += ".pb.swift";
 
-    // Generate main java file.
-    scoped_ptr<io::ZeroCopyOutputStream> output(
-      output_directory->Open(java_filename));
-    io::Printer printer(output.get(), '$');
-    file_generator.Generate(&printer);
-  }
+  // Generate main Swift file.
+  fprintf(stderr, "generating main swift file\n");
+  scoped_ptr<io::ZeroCopyOutputStream> output(
+					      output_directory->Open(swift_filename));
+  io::Printer printer(output.get(), '$');
+  file_generator.Generate(&printer);
 
-  // Generate sibling files.
-  file_generator.GenerateSiblings(package_dir, output_directory, &all_files);
+  // // Generate sibling files.
+  // file_generator.GenerateSiblings("/", output_directory, &all_files);
 
-  // Generate output list if requested.
-  if (!output_list_file.empty()) {
-    // Generate output list.  This is just a simple text file placed in a
-    // deterministic location which lists the .java files being generated.
-    scoped_ptr<io::ZeroCopyOutputStream> srclist_raw_output(
-      output_directory->Open(output_list_file));
-    io::Printer srclist_printer(srclist_raw_output.get(), '$');
-    for (int i = 0; i < all_files.size(); i++) {
-      srclist_printer.Print("$filename$\n", "filename", all_files[i]);
-    }
-  }
+  // // Generate output list if requested.
+  // if (!output_list_file.empty()) {
+  //   // Generate output list.  This is just a simple text file placed in a
+  //   // deterministic location which lists the .java files being generated.
+  //   scoped_ptr<io::ZeroCopyOutputStream> srclist_raw_output(
+  //     output_directory->Open(output_list_file));
+  //   io::Printer srclist_printer(srclist_raw_output.get(), '$');
+  //   for (int i = 0; i < all_files.size(); i++) {
+  //     srclist_printer.Print("$filename$\n", "filename", all_files[i]);
+  //   }
+  // }
 
   return true;
 }

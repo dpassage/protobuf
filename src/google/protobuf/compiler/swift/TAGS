@@ -1,0 +1,403 @@
+
+swift_enum.cc,364
+namespace google 45,2116
+namespace protobuf google::protobuf46,2135
+namespace compiler google::protobuf::compiler47,2156
+namespace swift google::protobuf::compiler::swift48,2177
+EnumGenerator::EnumGenerator(google::protobuf::compiler::swift::EnumGenerator::EnumGenerator50,2196
+EnumGenerator::~EnumGenerator(68,2782
+void EnumGenerator::Generate(70,2818
+
+swift_enum_field.cc,1442
+namespace google 45,2105
+namespace protobuf google::protobuf46,2124
+namespace compiler google::protobuf::compiler47,2145
+namespace swift google::protobuf::compiler::swift48,2166
+void SetEnumVariables(google::protobuf::compiler::swift::SetEnumVariables54,2328
+void LoadEnumValues(85,3810
+void PrintCaseLabels(99,4385
+EnumFieldGenerator(113,4730
+EnumFieldGenerator::~EnumFieldGenerator(119,4987
+GenerateMembers(122,5059
+GenerateClearCode(135,5437
+GenerateMergingCode(146,5684
+GenerateSerializationCode(166,6342
+GenerateSerializedSizeCode(186,7001
+void EnumFieldGenerator::GenerateEqualsCode(206,7703
+void EnumFieldGenerator::GenerateHashCodeCode(236,8773
+AccessorEnumFieldGenerator(253,9278
+AccessorEnumFieldGenerator::~AccessorEnumFieldGenerator(261,9629
+GenerateMembers(264,9725
+GenerateClearCode(296,10639
+GenerateMergingCode(302,10784
+GenerateSerializationCode(318,11336
+GenerateSerializedSizeCode(326,11543
+GenerateEqualsCode(335,11822
+GenerateHashCodeCode(344,12044
+RepeatedEnumFieldGenerator(352,12270
+RepeatedEnumFieldGenerator::~RepeatedEnumFieldGenerator(358,12535
+GenerateMembers(361,12631
+GenerateClearCode(367,12806
+GenerateMergingCode(373,12959
+GenerateMergingCodeFromPacked(411,14349
+GenerateRepeatedDataSizeCode(454,15718
+GenerateSerializationCode(466,16168
+GenerateSerializedSizeCode(492,16939
+GenerateFixClonedCode(518,17610
+GenerateEqualsCode(526,17848
+GenerateHashCodeCode(535,18100
+
+swift_extension.cc,431
+namespace google 39,1932
+namespace protobuf google::protobuf40,1951
+namespace compiler google::protobuf::compiler41,1972
+namespace swift google::protobuf::compiler::swift42,1993
+const char* GetTypeConstantName(google::protobuf::compiler::swift::GetTypeConstantName49,2086
+void SetVariables(80,3519
+ExtensionGenerator(126,5607
+ExtensionGenerator::~ExtensionGenerator(131,5782
+void ExtensionGenerator::Generate(133,5828
+
+swift_field.cc,859
+namespace google 43,2193
+namespace protobuf google::protobuf44,2212
+namespace compiler google::protobuf::compiler45,2233
+namespace swift google::protobuf::compiler::swift46,2254
+FieldGenerator::~FieldGenerator(google::protobuf::compiler::swift::FieldGenerator::~FieldGenerator48,2273
+bool FieldGenerator::SavedDefaultNeeded(google::protobuf::compiler::swift::FieldGenerator::SavedDefaultNeeded50,2311
+void FieldGenerator::GenerateInitSavedDefaultCode(57,2543
+void FieldGenerator::GenerateMergingCodeFromPacked(63,2810
+FieldGeneratorMap::FieldGeneratorMap(75,3335
+FieldGenerator* FieldGeneratorMap::MakeGenerator(95,4068
+FieldGeneratorMap::~FieldGeneratorMap(145,5938
+const FieldGenerator& FieldGeneratorMap::get(147,5982
+void SetCommonOneofVariables(153,6176
+void GenerateOneofFieldEquals(171,6968
+void GenerateOneofFieldHashCode(192,7699
+
+swift_file.cc,546
+namespace google 48,2321
+namespace protobuf google::protobuf49,2340
+namespace compiler google::protobuf::compiler50,2361
+namespace swift google::protobuf::compiler::swift51,2382
+bool UsesExtensions(google::protobuf::compiler::swift::UsesExtensions56,2494
+FileGenerator::FileGenerator(88,3508
+FileGenerator::~FileGenerator(94,3723
+bool FileGenerator::Validate(96,3759
+void FileGenerator::Generate(162,6285
+template<typename GeneratorClass,214,7940
+static void GenerateSibling(215,8000
+void FileGenerator::GenerateSiblings(240,8848
+
+swift_generator.cc,416
+namespace google 44,2191
+namespace protobuf google::protobuf45,2210
+namespace compiler google::protobuf::compiler46,2231
+namespace swift google::protobuf::compiler::swift47,2252
+string TrimString(google::protobuf::compiler::swift::TrimString51,2284
+void UpdateParamsRecursively(62,2550
+SwiftGenerator::SwiftGenerator(85,3289
+SwiftGenerator::~SwiftGenerator(86,3325
+bool SwiftGenerator::Generate(88,3363
+
+swift_helpers.cc,1690
+namespace google 45,2110
+namespace protobuf google::protobuf46,2129
+namespace compiler google::protobuf::compiler47,2150
+namespace swift google::protobuf::compiler::swift48,2171
+class RenameKeywords google::protobuf::compiler::swift::RenameKeywords55,2408
+  RenameKeywords(google::protobuf::compiler::swift::RenameKeywords::RenameKeywords60,2490
+  string RenameJavaKeywordsImpl(google::protobuf::compiler::swift::RenameKeywords::RenameJavaKeywordsImpl83,3567
+static RenameKeywords sRenameKeywords;95,3777
+const string& FieldName(::FieldName101,3865
+string UnderscoresToCamelCaseImpl(112,4253
+string UnderscoresToCamelCase(145,5209
+string UnderscoresToCapitalizedCamelCase(149,5336
+string UnderscoresToCamelCase(153,5473
+string UnderscoresToCamelCase(157,5600
+string UnderscoresToCapitalizedCamelCase(161,5724
+string RenameJavaKeywords(165,5858
+string StripProto(169,5966
+string FileClassName(177,6183
+string FileJavaPackage(194,6771
+bool IsOuterClassNeeded(207,7130
+string ToJavaName(227,7686
+string ClassName(242,8195
+string ClassName(249,8430
+string FieldConstantName(265,9035
+string FieldDefaultConstantName(271,9181
+void PrintFieldComment(275,9326
+JavaType GetJavaType(291,9995
+string PrimitiveTypeName(337,11215
+string BoxedPrimitiveTypeName(357,11829
+string EmptyArrayName(377,12516
+string DefaultValue(397,13638
+static const char* kBitMasks[kBitMasks477,16476
+string GetBitFieldName(515,17030
+string GetBitFieldNameForBit(522,17172
+string GenerateGetBit(526,17263
+string GenerateSetBit(535,17525
+string GenerateClearBit(544,17769
+string GenerateDifferentBit(553,18041
+void SetBitOperationVariables(563,18353
+bool HasMapField(571,18705
+
+swift_map_field.cc,680
+namespace google 38,1932
+namespace protobuf google::protobuf39,1951
+namespace compiler google::protobuf::compiler40,1972
+namespace swift google::protobuf::compiler::swift41,1993
+string TypeName(google::protobuf::compiler::swift::TypeName45,2025
+const FieldDescriptor* KeyField(72,2777
+const FieldDescriptor* ValueField(79,3067
+void SetMapVariables(86,3361
+MapFieldGenerator::MapFieldGenerator(113,4712
+MapFieldGenerator::~MapFieldGenerator(119,4954
+GenerateMembers(122,5023
+GenerateClearCode(128,5213
+GenerateMergingCode(134,5343
+GenerateSerializationCode(146,5772
+GenerateSerializedSizeCode(157,6175
+GenerateEqualsCode(168,6581
+GenerateHashCodeCode(177,6822
+
+swift_message.cc,1147
+namespace google 47,2290
+namespace protobuf google::protobuf48,2309
+namespace compiler google::protobuf::compiler49,2330
+namespace swift google::protobuf::compiler::swift50,2351
+struct FieldOrderingByNumber google::protobuf::compiler::swift::FieldOrderingByNumber57,2444
+  inline bool operator()(google::protobuf::compiler::swift::FieldOrderingByNumber::operator()58,2475
+const FieldDescriptor** SortFieldsByNumber(66,2723
+MessageGenerator::MessageGenerator(81,3183
+MessageGenerator::~MessageGenerator(87,3367
+void MessageGenerator::GenerateStaticVariables(89,3409
+void MessageGenerator::GenerateStaticVariableInitializers(99,3814
+void MessageGenerator::Generate(110,4257
+GenerateMessageSerializationMethods(345,12260
+void MessageGenerator::GenerateMergeFromMethods(393,13625
+GenerateParseFromMethods(488,16239
+void MessageGenerator::GenerateSerializeOneField(507,17001
+void MessageGenerator::GenerateClear(512,17179
+void MessageGenerator::GenerateFieldInitializers(530,17534
+void MessageGenerator::GenerateClone(559,18469
+void MessageGenerator::GenerateEquals(586,19164
+void MessageGenerator::GenerateHashCode(640,20815
+
+swift_message_field.cc,1383
+namespace google 44,2066
+namespace protobuf google::protobuf45,2085
+namespace compiler google::protobuf::compiler46,2106
+namespace swift google::protobuf::compiler::swift47,2127
+void SetMessageVariables(google::protobuf::compiler::swift::SetMessageVariables56,2350
+MessageFieldGenerator(77,3244
+MessageFieldGenerator::~MessageFieldGenerator(82,3436
+GenerateMembers(85,3517
+GenerateClearCode(91,3685
+GenerateMergingCode(97,3819
+GenerateSerializationCode(113,4249
+GenerateSerializedSizeCode(121,4478
+GenerateFixClonedCode(130,4779
+GenerateEqualsCode(138,4986
+GenerateHashCodeCode(152,5326
+MessageOneofFieldGenerator::MessageOneofFieldGenerator(159,5577
+MessageOneofFieldGenerator::~MessageOneofFieldGenerator(166,5865
+GenerateMembers(169,5961
+GenerateClearCode(189,6617
+GenerateMergingCode(194,6741
+GenerateSerializationCode(205,7074
+GenerateSerializedSizeCode(214,7354
+GenerateFixClonedCode(224,7708
+GenerateEqualsCode(232,7938
+GenerateHashCodeCode(237,8086
+RepeatedMessageFieldGenerator::RepeatedMessageFieldGenerator(243,8276
+RepeatedMessageFieldGenerator::~RepeatedMessageFieldGenerator(249,8514
+GenerateMembers(252,8619
+GenerateClearCode(258,8797
+GenerateMergingCode(264,8954
+GenerateSerializationCode(305,10253
+GenerateSerializedSizeCode(318,10679
+GenerateFixClonedCode(332,11181
+GenerateEqualsCode(345,11615
+GenerateHashCodeCode(354,11870
+
+swift_primitive_field.cc,2464
+namespace google 47,2174
+namespace protobuf google::protobuf48,2193
+namespace compiler google::protobuf::compiler49,2214
+namespace swift google::protobuf::compiler::swift50,2235
+bool IsReferenceType(google::protobuf::compiler::swift::IsReferenceType57,2328
+bool IsArrayType(77,2915
+const char* GetCapitalizedType(97,3500
+int FixedSize(128,4919
+bool AllAscii(158,6254
+void SetPrimitiveVariables(168,6414
+PrimitiveFieldGenerator(238,10029
+PrimitiveFieldGenerator::~PrimitiveFieldGenerator(243,10225
+bool PrimitiveFieldGenerator::SavedDefaultNeeded(245,10281
+void PrimitiveFieldGenerator::GenerateInitSavedDefaultCode(249,10409
+GenerateMembers(257,10691
+GenerateClearCode(280,11359
+GenerateMergingCode(291,11626
+GenerateSerializationConditional(302,11905
+GenerateSerializationCode(339,13157
+GenerateSerializedSizeCode(353,13658
+GenerateFixClonedCode(368,14240
+GenerateEqualsCode(376,14475
+GenerateHashCodeCode(457,17380
+AccessorPrimitiveFieldGenerator(506,19123
+AccessorPrimitiveFieldGenerator::~AccessorPrimitiveFieldGenerator(513,19414
+bool AccessorPrimitiveFieldGenerator::SavedDefaultNeeded(515,19486
+GenerateInitSavedDefaultCode(520,19661
+GenerateMembers(528,19921
+GenerateClearCode(568,21184
+GenerateMergingCode(574,21349
+GenerateSerializationCode(581,21541
+GenerateSerializedSizeCode(589,21766
+GenerateEqualsCode(598,22065
+GenerateHashCodeCode(650,23776
+PrimitiveOneofFieldGenerator::PrimitiveOneofFieldGenerator(696,25345
+PrimitiveOneofFieldGenerator::~PrimitiveOneofFieldGenerator(703,25637
+void PrimitiveOneofFieldGenerator::GenerateMembers(705,25703
+void PrimitiveOneofFieldGenerator::GenerateClearCode(724,26306
+void PrimitiveOneofFieldGenerator::GenerateMergingCode(729,26436
+void PrimitiveOneofFieldGenerator::GenerateSerializationCode(736,26647
+void PrimitiveOneofFieldGenerator::GenerateSerializedSizeCode(745,26921
+void PrimitiveOneofFieldGenerator::GenerateEqualsCode(755,27273
+void PrimitiveOneofFieldGenerator::GenerateHashCodeCode(760,27427
+RepeatedPrimitiveFieldGenerator::RepeatedPrimitiveFieldGenerator(767,27657
+RepeatedPrimitiveFieldGenerator::~RepeatedPrimitiveFieldGenerator(773,27899
+GenerateMembers(776,28010
+GenerateClearCode(782,28192
+GenerateMergingCode(788,28341
+GenerateMergingCodeFromPacked(816,29367
+GenerateRepeatedDataSizeCode(857,30955
+GenerateSerializationCode(888,32213
+GenerateSerializedSizeCode(921,33347
+GenerateEqualsCode(950,34186
+GenerateHashCodeCode(959,34443
+
+swift_enum.h,109
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_H__36,1833
+class EnumGenerator 55,2186
+  struct Alias 73,2810
+
+swift_enum_field.h,212
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_FIELD_H__36,1839
+class EnumFieldGenerator 48,2082
+  void GenerateMembers(55,2334
+class AccessorEnumFieldGenerator 71,2930
+class RepeatedEnumFieldGenerator 94,3828
+
+swift_extension.h,119
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_EXTENSION_H_36,1834
+class ExtensionGenerator 54,2200
+  void Generate(59,2350
+
+swift_field.h,410
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_FIELD_H__36,1834
+class FieldGenerator 55,2226
+  FieldGenerator(57,2258
+  virtual bool SavedDefaultNeeded(60,2348
+  virtual void GenerateFixClonedCode(FieldGenerator::GenerateFixClonedCode86,3851
+class FieldGeneratorMap 95,4096
+  int total_bits(FieldGeneratorMap::total_bits101,4303
+  bool saved_defaults_needed(FieldGeneratorMap::saved_defaults_needed102,4352
+
+swift_file.h,158
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_FILE_H__36,1833
+class FileGenerator 58,2313
+  const string& java_package(77,3056
+  const string& classname(78,3113
+
+swift_generator.h,66
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_NANO_GENERATOR_H__38,1899
+
+swift_helpers.h,480
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_HELPERS_H__36,1836
+inline string ClassName(100,4721
+inline string ExtensionIdentifierName(104,4893
+enum JavaType 120,5543
+  JAVATYPE_INT,121,5559
+  JAVATYPE_LONG,122,5575
+  JAVATYPE_FLOAT,123,5592
+  JAVATYPE_DOUBLE,124,5610
+  JAVATYPE_BOOLEAN,125,5629
+  JAVATYPE_STRING,126,5649
+  JAVATYPE_BYTES,127,5668
+  JAVATYPE_ENUM,128,5686
+  JAVATYPE_MESSAGE129,5703
+inline JavaType GetJavaType(134,5783
+inline bool IsMapEntry(186,7733
+
+swift_map_field.h,126
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_MAP_FIELD_H__32,1700
+class MapFieldGenerator 44,1942
+  void GenerateMembers(51,2191
+
+swift_message.h,91
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_H__36,1836
+class MessageGenerator 55,2289
+
+swift_message_field.h,221
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_MESSAGE_FIELD_H__36,1842
+class MessageFieldGenerator 47,2070
+  void GenerateMembers(54,2331
+class MessageOneofFieldGenerator 70,2952
+class RepeatedMessageFieldGenerator 93,3885
+
+swift_params.h,2866
+#define PROTOBUF_COMPILER_SWIFT_SWIFT_PARAMS_H_34,1738
+enum eMultipleFiles 45,1941
+enum eMultipleFiles { SWIFT_MUL_UNSET,45,1941
+enum eMultipleFiles { SWIFT_MUL_UNSET, SWIFT_MUL_FALSE,45,1941
+enum eMultipleFiles { SWIFT_MUL_UNSET, SWIFT_MUL_FALSE, SWIFT_MUL_TRUE 45,1941
+class Params 48,2057
+  typedef map<string, string> NameMap;50,2081
+  typedef set<string> NameSet;51,2120
+  Params(73,2691
+  const string& base_name(91,3218
+  bool has_java_package(95,3282
+  void set_java_package(99,3434
+  const string& java_package(103,3569
+  const NameMap& java_packages(Params::java_packages113,3817
+  bool has_java_outer_classname(Params::has_java_outer_classname117,3884
+  void set_java_outer_classname(Params::set_java_outer_classname121,4060
+  const string& java_outer_classname(Params::java_outer_classname125,4227
+  const NameMap& java_outer_classnames(Params::java_outer_classnames135,4499
+  void set_override_java_multiple_files(Params::set_override_java_multiple_files139,4582
+  void clear_override_java_multiple_files(Params::clear_override_java_multiple_files146,4813
+  void set_java_multiple_files(Params::set_java_multiple_files150,4917
+  bool java_multiple_files(Params::java_multiple_files157,5118
+  void set_store_unknown_fields(Params::set_store_unknown_fields169,5446
+  bool store_unknown_fields(Params::store_unknown_fields172,5531
+  void set_generate_has(Params::set_generate_has176,5608
+  bool generate_has(Params::generate_has179,5677
+  void set_java_enum_style(Params::set_java_enum_style183,5738
+  bool java_enum_style(Params::java_enum_style186,5813
+  void set_optional_field_accessors(Params::set_optional_field_accessors190,5880
+  bool optional_field_accessors(Params::optional_field_accessors193,5973
+  void set_use_reference_types_for_primitives(Params::set_use_reference_types_for_primitives197,6058
+  bool use_reference_types_for_primitives(Params::use_reference_types_for_primitives200,6171
+  void set_generate_equals(Params::set_generate_equals204,6276
+  bool generate_equals(Params::generate_equals207,6351
+  void set_ignore_services(Params::set_ignore_services211,6418
+  bool ignore_services(Params::ignore_services214,6493
+  void set_parcelable_messages(Params::set_parcelable_messages218,6560
+  bool parcelable_messages(Params::parcelable_messages221,6643
+  void set_reftypes_primitive_enums(Params::set_reftypes_primitive_enums225,6718
+  bool reftypes_primitive_enums(Params::reftypes_primitive_enums228,6811
+  void set_generate_clear(Params::set_generate_clear232,6896
+  bool generate_clear(Params::generate_clear235,6969
+  void set_generate_clone(Params::set_generate_clone239,7034
+  bool generate_clone(Params::generate_clone242,7107
+  void set_generate_intdefs(Params::set_generate_intdefs246,7172
+  bool generate_intdefs(Params::generate_intdefs249,7249
+
+swift_primitive_field.h,280
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_PRIMITIVE_FIELD_H__36,1844
+class PrimitiveFieldGenerator 47,2074
+  bool SavedDefaultNeeded(54,2341
+class AccessorPrimitiveFieldGenerator 73,3076
+class PrimitiveOneofFieldGenerator 97,4058
+class RepeatedPrimitiveFieldGenerator 119,4910
