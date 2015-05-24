@@ -74,13 +74,11 @@ class FileGenerator {
                         GeneratorContext* output_directory,
                         vector<string>* file_list);
 
-  const string& java_package() { return java_package_; }
   const string& classname()    { return classname_;    }
 
  private:
   const FileDescriptor* file_;
   const Params& params_;
-  string java_package_;
   string classname_;
 
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(FileGenerator);
