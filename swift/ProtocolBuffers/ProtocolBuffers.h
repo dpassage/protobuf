@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 David Paschich. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for ProtocolBuffers.
 FOUNDATION_EXPORT double ProtocolBuffersVersionNumber;

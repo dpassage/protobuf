@@ -10,6 +10,7 @@
 		6B2CE2111B12907E001F2310 /* ProtocolBuffers.h in Headers */ = {isa = PBXBuildFile; fileRef = 6B2CE2101B12907E001F2310 /* ProtocolBuffers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B2CE2171B12907E001F2310 /* ProtocolBuffers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B2CE20B1B12907E001F2310 /* ProtocolBuffers.framework */; };
 		6B2CE21E1B12907E001F2310 /* ProtocolBuffersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2CE21D1B12907E001F2310 /* ProtocolBuffersTests.swift */; };
+		6B2CE2281B1292B3001F2310 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2CE2271B1292B3001F2310 /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		6B2CE2161B12907E001F2310 /* ProtocolBuffersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtocolBuffersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B2CE21C1B12907E001F2310 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B2CE21D1B12907E001F2310 /* ProtocolBuffersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolBuffersTests.swift; sourceTree = "<group>"; };
+		6B2CE2271B1292B3001F2310 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 			children = (
 				6B2CE2101B12907E001F2310 /* ProtocolBuffers.h */,
 				6B2CE20E1B12907E001F2310 /* Supporting Files */,
+				6B2CE2271B1292B3001F2310 /* Message.swift */,
 			);
 			path = ProtocolBuffers;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B2CE2281B1292B3001F2310 /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +322,7 @@
 		6B2CE2221B12907E001F2310 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -329,12 +334,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		6B2CE2231B12907E001F2310 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -400,6 +407,7 @@
 				6B2CE2231B12907E001F2310 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6B2CE2241B12907E001F2310 /* Build configuration list for PBXNativeTarget "ProtocolBuffersTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +416,7 @@
 				6B2CE2261B12907E001F2310 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
