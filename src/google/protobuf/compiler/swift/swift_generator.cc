@@ -188,7 +188,7 @@ bool SwiftGenerator::Generate(const FileDescriptor* file,
   swift_filename += ".pb.swift";
 
   // Generate main Swift file.
-  fprintf(stderr, "generating main swift file\n");
+  fprintf(stderr, "generating main swift file %s\n", swift_filename.c_str());
   scoped_ptr<io::ZeroCopyOutputStream> output(
 					      output_directory->Open(swift_filename));
   io::Printer printer(output.get(), '$');

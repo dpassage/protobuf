@@ -175,20 +175,16 @@ string StripProto(const string& filename) {
 }
 
 string FileClassName(const Params& params, const FileDescriptor* file) {
-  if (params.has_java_outer_classname(file->name())) {
-    return params.java_outer_classname(file->name());
+  // Use the filename itself with underscores removed
+  // and a CamelCase style name.
+  string basename;
+  string::size_type last_slash = file->name().find_last_of('/');
+  if (last_slash == string::npos) {
+    basename = file->name();
   } else {
-    // Use the filename itself with underscores removed
-    // and a CamelCase style name.
-    string basename;
-    string::size_type last_slash = file->name().find_last_of('/');
-    if (last_slash == string::npos) {
-      basename = file->name();
-    } else {
-      basename = file->name().substr(last_slash + 1);
-    }
-    return UnderscoresToCamelCaseImpl(StripProto(basename), true);
+    basename = file->name().substr(last_slash + 1);
   }
+  return UnderscoresToCamelCaseImpl(StripProto(basename), true);
 }
 
 string FileJavaPackage(const Params& params, const FileDescriptor* file) {
