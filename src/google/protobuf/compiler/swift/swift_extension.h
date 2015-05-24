@@ -28,45 +28,47 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Author: kenton@google.com (Kenton Varda)
+// Author: bduff@google.com (Brian Duff)
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
-//
-// Generates Java nano code for a given .proto file.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_JAVANANO_NANO_GENERATOR_H__
-#define GOOGLE_PROTOBUF_COMPILER_JAVANANO_NANO_GENERATOR_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_EXTENSION_H_
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_EXTENSION_H_
 
-#include <string>
-#include <google/protobuf/compiler/code_generator.h>
+#include <google/protobuf/stubs/common.h>
+#include <google/protobuf/compiler/swift/swift_params.h>
+#include <google/protobuf/descriptor.pb.h>
+
 
 namespace google {
 namespace protobuf {
+  namespace io {
+    class Printer;             // printer.h
+  }
+}
+
+namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
-// CodeGenerator implementation which generates Java nano code.  If you create your
-// own protocol compiler binary and you want it to support Java output for the
-// nano runtime, you can do so by registering an instance of this CodeGenerator with
-// the CommandLineInterface in your main() function.
-class LIBPROTOC_EXPORT JavaNanoGenerator : public CodeGenerator {
+class ExtensionGenerator {
  public:
-  JavaNanoGenerator();
-  ~JavaNanoGenerator();
+  explicit ExtensionGenerator(const FieldDescriptor* descriptor, const Params& params);
+  ~ExtensionGenerator();
 
-  // implements CodeGenerator ----------------------------------------
-  bool Generate(const FileDescriptor* file,
-                const string& parameter,
-                GeneratorContext* output_directory,
-                string* error) const;
+  void Generate(io::Printer* printer) const;
 
  private:
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(JavaNanoGenerator);
+  const Params& params_;
+  const FieldDescriptor* descriptor_;
+  map<string, string> variables_;
+
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ExtensionGenerator);
 };
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
-
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_JAVANANO_NANO_GENERATOR_H__
+
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_EXTENSION_H_

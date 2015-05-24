@@ -31,57 +31,42 @@
 // Author: kenton@google.com (Kenton Varda)
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
+//
+// Generates Java nano code for a given .proto file.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_JAVANANO_ENUM_H__
-#define GOOGLE_PROTOBUF_COMPILER_JAVANANO_ENUM_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_NANO_GENERATOR_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_NANO_GENERATOR_H__
 
 #include <string>
-#include <vector>
-
-#include <google/protobuf/compiler/javanano/javanano_params.h>
-#include <google/protobuf/descriptor.h>
+#include <google/protobuf/compiler/code_generator.h>
 
 namespace google {
 namespace protobuf {
-  namespace io {
-    class Printer;             // printer.h
-  }
-}
-
-namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
-class EnumGenerator {
+// CodeGenerator implementation which generates Java nano code.  If you create your
+// own protocol compiler binary and you want it to support Java output for the
+// nano runtime, you can do so by registering an instance of this CodeGenerator with
+// the CommandLineInterface in your main() function.
+class LIBPROTOC_EXPORT SwiftGenerator : public CodeGenerator {
  public:
-  explicit EnumGenerator(const EnumDescriptor* descriptor, const Params& params);
-  ~EnumGenerator();
+  SwiftGenerator();
+  ~SwiftGenerator();
 
-  void Generate(io::Printer* printer);
+  // implements CodeGenerator ----------------------------------------
+  bool Generate(const FileDescriptor* file,
+                const string& parameter,
+                GeneratorContext* output_directory,
+                string* error) const;
 
  private:
-  const Params& params_;
-  const EnumDescriptor* descriptor_;
-
-  // The proto language allows multiple enum constants to have the same numeric
-  // value.  Java, however, does not allow multiple enum constants to be
-  // considered equivalent.  We treat the first defined constant for any
-  // given numeric value as "canonical" and the rest as aliases of that
-  // canonical value.
-  vector<const EnumValueDescriptor*> canonical_values_;
-
-  struct Alias {
-    const EnumValueDescriptor* value;
-    const EnumValueDescriptor* canonical_value;
-  };
-  vector<Alias> aliases_;
-
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EnumGenerator);
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(SwiftGenerator);
 };
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_JAVANANO_ENUM_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_GENERATOR_H__

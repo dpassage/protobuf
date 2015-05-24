@@ -32,18 +32,18 @@
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_JAVANANO_ENUM_FIELD_H__
-#define GOOGLE_PROTOBUF_COMPILER_JAVANANO_ENUM_FIELD_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_FIELD_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_FIELD_H__
 
 #include <map>
 #include <string>
 #include <vector>
-#include <google/protobuf/compiler/javanano/javanano_field.h>
+#include <google/protobuf/compiler/swift/swift_field.h>
 
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 class EnumFieldGenerator : public FieldGenerator {
  public:
@@ -118,9 +118,9 @@ class RepeatedEnumFieldGenerator : public FieldGenerator {
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(RepeatedEnumFieldGenerator);
 };
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_JAVANANO_ENUM_FIELD_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_FIELD_H__

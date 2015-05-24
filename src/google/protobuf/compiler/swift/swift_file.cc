@@ -34,11 +34,11 @@
 
 #include <iostream>
 
-#include <google/protobuf/compiler/javanano/javanano_file.h>
-#include <google/protobuf/compiler/javanano/javanano_enum.h>
-#include <google/protobuf/compiler/javanano/javanano_extension.h>
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
-#include <google/protobuf/compiler/javanano/javanano_message.h>
+#include <google/protobuf/compiler/swift/swift_file.h>
+#include <google/protobuf/compiler/swift/swift_enum.h>
+#include <google/protobuf/compiler/swift/swift_extension.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
+#include <google/protobuf/compiler/swift/swift_message.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
@@ -48,7 +48,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 namespace {
 
@@ -116,12 +116,12 @@ bool FileGenerator::Validate(string* error) {
     return true;
   }
 
-  // Check whether legacy javanano generator would omit the outer class.
+  // Check whether legacy swift generator would omit the outer class.
   if (!params_.has_java_outer_classname(file_->name())
       && file_->message_type_count() == 1
       && file_->enum_type_count() == 0 && file_->extension_count() == 0) {
     cout << "INFO: " << file_->name() << ":" << endl;
-    cout << "Javanano generator has changed to align with java generator. "
+    cout << "Swift generator has changed to align with java generator. "
         "An outer class will be created for this file and the single message "
         "in the file will become a nested class. Use java_multiple_files to "
         "skip generating the outer class, or set an explicit "
@@ -257,7 +257,7 @@ void FileGenerator::GenerateSiblings(const string& package_dir,
   }
 }
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

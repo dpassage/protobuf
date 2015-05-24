@@ -35,8 +35,8 @@
 #include <limits>
 #include <vector>
 
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
-#include <google/protobuf/compiler/javanano/javanano_params.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
+#include <google/protobuf/compiler/swift/swift_params.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/stubs/hash.h>
 #include <google/protobuf/stubs/strutil.h>
@@ -45,7 +45,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 const char kThickSeparator[] =
   "// ===================================================================\n";
@@ -579,7 +579,7 @@ bool HasMapField(const Descriptor* descriptor) {
   return false;
 }
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

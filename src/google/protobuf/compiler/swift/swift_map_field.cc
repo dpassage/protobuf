@@ -28,8 +28,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include <google/protobuf/compiler/javanano/javanano_map_field.h>
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
+#include <google/protobuf/compiler/swift/swift_map_field.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/wire_format.h>
@@ -38,7 +38,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 namespace {
 
@@ -180,7 +180,7 @@ GenerateHashCodeCode(io::Printer* printer) const {
     "    com.google.protobuf.nano.InternalNano.hashCode(this.$name$);\n");
 }
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

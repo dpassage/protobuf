@@ -30,8 +30,8 @@
 
 // Author: wink@google.com (Wink Saville)
 
-#ifndef PROTOBUF_COMPILER_JAVANANO_JAVANANO_PARAMS_H_
-#define PROTOBUF_COMPILER_JAVANANO_JAVANANO_PARAMS_H_
+#ifndef PROTOBUF_COMPILER_SWIFT_SWIFT_PARAMS_H_
+#define PROTOBUF_COMPILER_SWIFT_SWIFT_PARAMS_H_
 
 #include <map>
 #include <set>
@@ -40,9 +40,9 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
-enum eMultipleFiles { JAVANANO_MUL_UNSET, JAVANANO_MUL_FALSE, JAVANANO_MUL_TRUE };
+enum eMultipleFiles { SWIFT_MUL_UNSET, SWIFT_MUL_FALSE, SWIFT_MUL_TRUE };
 
 // Parameters for used by the generators
 class Params {
@@ -73,7 +73,7 @@ class Params {
   Params(const string & base_name) :
     empty_(""),
     base_name_(base_name),
-    override_java_multiple_files_(JAVANANO_MUL_UNSET),
+    override_java_multiple_files_(SWIFT_MUL_UNSET),
     store_unknown_fields_(false),
     generate_has_(false),
     java_enum_style_(false),
@@ -138,13 +138,13 @@ class Params {
 
   void set_override_java_multiple_files(bool java_multiple_files) {
     if (java_multiple_files) {
-      override_java_multiple_files_ = JAVANANO_MUL_TRUE;
+      override_java_multiple_files_ = SWIFT_MUL_TRUE;
     } else {
-      override_java_multiple_files_ = JAVANANO_MUL_FALSE;
+      override_java_multiple_files_ = SWIFT_MUL_FALSE;
     }
   }
   void clear_override_java_multiple_files() {
-    override_java_multiple_files_ = JAVANANO_MUL_UNSET;
+    override_java_multiple_files_ = SWIFT_MUL_UNSET;
   }
 
   void set_java_multiple_files(const string& file_name, bool value) {
@@ -156,9 +156,9 @@ class Params {
   }
   bool java_multiple_files(const string& file_name) const {
     switch (override_java_multiple_files_) {
-      case JAVANANO_MUL_FALSE:
+      case SWIFT_MUL_FALSE:
         return false;
-      case JAVANANO_MUL_TRUE:
+      case SWIFT_MUL_TRUE:
         return true;
       default:
         return java_multiple_files_.find(file_name)
@@ -251,8 +251,8 @@ class Params {
   }
 };
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // PROTOBUF_COMPILER_JAVANANO_JAVANANO_PARAMS_H_
+#endif  // PROTOBUF_COMPILER_SWIFT_SWIFT_PARAMS_H_

@@ -34,10 +34,10 @@
 
 #include <algorithm>
 #include <google/protobuf/stubs/hash.h>
-#include <google/protobuf/compiler/javanano/javanano_message.h>
-#include <google/protobuf/compiler/javanano/javanano_enum.h>
-#include <google/protobuf/compiler/javanano/javanano_extension.h>
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
+#include <google/protobuf/compiler/swift/swift_message.h>
+#include <google/protobuf/compiler/swift/swift_enum.h>
+#include <google/protobuf/compiler/swift/swift_extension.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/coded_stream.h>
@@ -47,7 +47,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 using internal::WireFormat;
 using internal::WireFormatLite;
@@ -670,7 +670,7 @@ void MessageGenerator::GenerateHashCode(io::Printer* printer) {
 
 // ===================================================================
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

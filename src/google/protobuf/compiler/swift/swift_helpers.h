@@ -32,11 +32,11 @@
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_JAVANANO_HELPERS_H__
-#define GOOGLE_PROTOBUF_COMPILER_JAVANANO_HELPERS_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_HELPERS_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_HELPERS_H__
 
 #include <string>
-#include <google/protobuf/compiler/javanano/javanano_params.h>
+#include <google/protobuf/compiler/swift/swift_params.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/io/printer.h>
@@ -44,7 +44,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 // Commonly-used separator comments.  Thick is a line of '=', thin is a line
 // of '-'.
@@ -191,9 +191,9 @@ inline bool IsMapEntry(const Descriptor* descriptor) {
 
 bool HasMapField(const Descriptor* descriptor);
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_JAVANANO_HELPERS_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_HELPERS_H__

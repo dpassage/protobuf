@@ -28,17 +28,18 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// Author: bduff@google.com (Brian Duff)
+// Author: kenton@google.com (Kenton Varda)
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_JAVANANO_EXTENSION_H_
-#define GOOGLE_PROTOBUF_COMPILER_JAVANANO_EXTENSION_H_
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_H__
 
-#include <google/protobuf/stubs/common.h>
-#include <google/protobuf/compiler/javanano/javanano_params.h>
-#include <google/protobuf/descriptor.pb.h>
+#include <string>
+#include <vector>
 
+#include <google/protobuf/compiler/swift/swift_params.h>
+#include <google/protobuf/descriptor.h>
 
 namespace google {
 namespace protobuf {
@@ -49,26 +50,38 @@ namespace protobuf {
 
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
-class ExtensionGenerator {
+class EnumGenerator {
  public:
-  explicit ExtensionGenerator(const FieldDescriptor* descriptor, const Params& params);
-  ~ExtensionGenerator();
+  explicit EnumGenerator(const EnumDescriptor* descriptor, const Params& params);
+  ~EnumGenerator();
 
-  void Generate(io::Printer* printer) const;
+  void Generate(io::Printer* printer);
 
  private:
   const Params& params_;
-  const FieldDescriptor* descriptor_;
-  map<string, string> variables_;
+  const EnumDescriptor* descriptor_;
 
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ExtensionGenerator);
+  // The proto language allows multiple enum constants to have the same numeric
+  // value.  Java, however, does not allow multiple enum constants to be
+  // considered equivalent.  We treat the first defined constant for any
+  // given numeric value as "canonical" and the rest as aliases of that
+  // canonical value.
+  vector<const EnumValueDescriptor*> canonical_values_;
+
+  struct Alias {
+    const EnumValueDescriptor* value;
+    const EnumValueDescriptor* canonical_value;
+  };
+  vector<Alias> aliases_;
+
+  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(EnumGenerator);
 };
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
-}  // namespace google
 
-#endif  // GOOGLE_PROTOBUF_COMPILER_JAVANANO_EXTENSION_H_
+}  // namespace google
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_ENUM_H__

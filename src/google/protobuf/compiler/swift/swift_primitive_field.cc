@@ -36,9 +36,9 @@
 #include <math.h>
 #include <string>
 
-#include <google/protobuf/compiler/javanano/javanano_primitive_field.h>
+#include <google/protobuf/compiler/swift/swift_primitive_field.h>
 #include <google/protobuf/stubs/common.h>
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/wire_format.h>
 #include <google/protobuf/stubs/strutil.h>
@@ -47,7 +47,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 using internal::WireFormat;
 using internal::WireFormatLite;
@@ -962,7 +962,7 @@ GenerateHashCodeCode(io::Printer* printer) const {
     "    + com.google.protobuf.nano.InternalNano.hashCode(this.$name$);\n");
 }
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

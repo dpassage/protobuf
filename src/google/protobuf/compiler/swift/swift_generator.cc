@@ -32,10 +32,10 @@
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
-#include <google/protobuf/compiler/javanano/javanano_params.h>
-#include <google/protobuf/compiler/javanano/javanano_generator.h>
-#include <google/protobuf/compiler/javanano/javanano_file.h>
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
+#include <google/protobuf/compiler/swift/swift_params.h>
+#include <google/protobuf/compiler/swift/swift_generator.h>
+#include <google/protobuf/compiler/swift/swift_file.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -44,7 +44,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 namespace {
 
@@ -82,10 +82,10 @@ void UpdateParamsRecursively(Params& params,
   }
 }
 
-JavaNanoGenerator::JavaNanoGenerator() {}
-JavaNanoGenerator::~JavaNanoGenerator() {}
+SwiftGenerator::SwiftGenerator() {}
+SwiftGenerator::~SwiftGenerator() {}
 
-bool JavaNanoGenerator::Generate(const FileDescriptor* file,
+bool SwiftGenerator::Generate(const FileDescriptor* file,
                              const string& parameter,
                              GeneratorContext* output_directory,
                              string* error) const {
@@ -159,7 +159,7 @@ bool JavaNanoGenerator::Generate(const FileDescriptor* file,
     } else if (option_name == "generate_clear") {
       params.set_generate_clear(option_value == "true");
     } else {
-      *error = "Ignore unknown javanano generator option: " + option_name;
+      *error = "Ignore unknown swift generator option: " + option_name;
     }
   }
 

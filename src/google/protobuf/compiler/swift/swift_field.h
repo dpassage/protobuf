@@ -32,14 +32,14 @@
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_JAVANANO_FIELD_H__
-#define GOOGLE_PROTOBUF_COMPILER_JAVANANO_FIELD_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_FIELD_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_FIELD_H__
 
 #include <map>
 #include <string>
 #include <google/protobuf/stubs/common.h>
 #include <google/protobuf/descriptor.h>
-#include <google/protobuf/compiler/javanano/javanano_params.h>
+#include <google/protobuf/compiler/swift/swift_params.h>
 
 namespace google {
 namespace protobuf {
@@ -50,7 +50,7 @@ namespace protobuf {
 
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 class FieldGenerator {
  public:
@@ -122,9 +122,9 @@ void GenerateOneofFieldHashCode(const FieldDescriptor* descriptor,
                                 const map<string, string>& variables,
                                 io::Printer* printer);
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_JAVANANO_FIELD_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_FIELD_H__

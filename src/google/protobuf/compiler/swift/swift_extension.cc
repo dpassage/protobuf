@@ -30,8 +30,8 @@
 
 // Author: bduff@google.com (Brian Duff)
 
-#include <google/protobuf/compiler/javanano/javanano_extension.h>
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
+#include <google/protobuf/compiler/swift/swift_extension.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/stubs/strutil.h>
 #include <google/protobuf/wire_format.h>
@@ -39,7 +39,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 using internal::WireFormat;
 using internal::WireFormatLite;
@@ -143,7 +143,7 @@ void ExtensionGenerator::Generate(io::Printer* printer) const {
     "            $tag_params$L);\n");
 }
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google

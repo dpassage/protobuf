@@ -28,18 +28,18 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_COMPILER_JAVANANO_MAP_FIELD_H__
-#define GOOGLE_PROTOBUF_COMPILER_JAVANANO_MAP_FIELD_H__
+#ifndef GOOGLE_PROTOBUF_COMPILER_SWIFT_MAP_FIELD_H__
+#define GOOGLE_PROTOBUF_COMPILER_SWIFT_MAP_FIELD_H__
 
 #include <map>
 #include <string>
 #include <vector>
-#include <google/protobuf/compiler/javanano/javanano_field.h>
+#include <google/protobuf/compiler/swift/swift_field.h>
 
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 class MapFieldGenerator : public FieldGenerator {
  public:
@@ -63,8 +63,8 @@ class MapFieldGenerator : public FieldGenerator {
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(MapFieldGenerator);
 };
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
-#endif  // GOOGLE_PROTOBUF_COMPILER_JAVANANO_MAP_FIELD_H__
+#endif  // GOOGLE_PROTOBUF_COMPILER_SWIFT_MAP_FIELD_H__

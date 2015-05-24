@@ -35,9 +35,9 @@
 #include <map>
 #include <string>
 
-#include <google/protobuf/compiler/javanano/javanano_params.h>
-#include <google/protobuf/compiler/javanano/javanano_enum.h>
-#include <google/protobuf/compiler/javanano/javanano_helpers.h>
+#include <google/protobuf/compiler/swift/swift_params.h>
+#include <google/protobuf/compiler/swift/swift_enum.h>
+#include <google/protobuf/compiler/swift/swift_helpers.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/stubs/strutil.h>
@@ -45,7 +45,7 @@
 namespace google {
 namespace protobuf {
 namespace compiler {
-namespace javanano {
+namespace swift {
 
 EnumGenerator::EnumGenerator(const EnumDescriptor* descriptor, const Params& params)
   : params_(params), descriptor_(descriptor) {
@@ -137,7 +137,7 @@ void EnumGenerator::Generate(io::Printer* printer) {
   }
 }
 
-}  // namespace javanano
+}  // namespace swift
 }  // namespace compiler
 }  // namespace protobuf
 }  // namespace google
