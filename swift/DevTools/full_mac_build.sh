@@ -133,7 +133,7 @@ if [[ "${DO_CLEAN}" == "yes" ]] ; then
   if [[ "${DO_XCODE_IOS_TESTS}" == "yes" ]] ; then
     XCODEBUILD_CLEAN_BASE_IOS=(
       xcodebuild
-        -project objectivec/ProtocolBuffers_iOS.xcodeproj
+        -project swift/ProtocolBuffers_iOS.xcodeproj
         -scheme ProtocolBuffers
     )
   "${XCODEBUILD_CLEAN_BASE_IOS[@]}" -configuration Debug clean
@@ -142,7 +142,7 @@ if [[ "${DO_CLEAN}" == "yes" ]] ; then
   if [[ "${DO_XCODE_OSX_TESTS}" == "yes" ]] ; then
     XCODEBUILD_CLEAN_BASE_OSX=(
       xcodebuild
-        -project objectivec/ProtocolBuffers_OSX.xcodeproj
+        -project swift/ProtocolBuffers_OSX.xcodeproj
         -scheme ProtocolBuffers
     )
   "${XCODEBUILD_CLEAN_BASE_OSX[@]}" -configuration Debug clean
@@ -167,43 +167,43 @@ header "Ensuring the ObjC descriptors are current."
 readonly NewestInput=$(find \
    src/google/protobuf/*.proto \
    src/.libs src/*.la src/protoc \
-   objectivec/generate_descriptors_proto.sh \
+   swift/generate_descriptors_proto.sh \
       -type f -print0 \
       | xargs -0 stat -f "%m %N" \
       | sort -n | tail -n1 | cut -f2- -d" ")
 # Find the oldest output file.
 readonly OldestOutput=$(find \
-      "${ProtoRootDir}/objectivec/google" \
+      "${ProtoRootDir}/swift/google" \
       -type f -print0 \
       | xargs -0 stat -f "%m %N" \
       | sort -n -r | tail -n1 | cut -f2- -d" ")
 # If the newest input is newer than the oldest output, regenerate.
 if [[ "${NewestInput}" -nt "${OldestOutput}" ]] ; then
   echo ">> Newest input is newer than oldest output, regenerating."
-  objectivec/generate_descriptors_proto.sh -j "${NUM_MAKE_JOBS}"
+  swift/generate_descriptors_proto.sh -j "${NUM_MAKE_JOBS}"
 else
   echo ">> Newest input is older than oldest output, no need to regenerating."
 fi
 
 header "Checking on the ObjC Runtime Code"
-objectivec/DevTools/pddm_tests.py
-if ! objectivec/DevTools/pddm.py --dry-run objectivec/*.[hm] objectivec/Tests/*.[hm] ; then
+swift/DevTools/pddm_tests.py
+if ! swift/DevTools/pddm.py --dry-run swift/*.[hm] swift/Tests/*.[hm] ; then
   echo ""
   echo "Update by running:"
-  echo "   objectivec/DevTools/pddm.py objectivec/*.[hm] objectivec/Tests/*.[hm]"
+  echo "   swift/DevTools/pddm.py swift/*.[hm] swift/Tests/*.[hm]"
   exit 1
 fi
 
 if [[ "${DO_XCODE_IOS_TESTS}" == "yes" ]] ; then
   XCODEBUILD_TEST_BASE_IOS=(
     xcodebuild
-      -project objectivec/ProtocolBuffers_iOS.xcodeproj
+      -project swift/ProtocolBuffers_iOS.xcodeproj
       -scheme ProtocolBuffers
       # Don't need to worry about form factors or retina/non retina;
       # just pick a mix of OS Versions and 32/64 bit.
-      -destination "platform=iOS Simulator,name=iPhone 4s,OS=7.1" # 32bit
+#      -destination "platform=iOS Simulator,name=iPhone 4s,OS=7.1" # 32bit
       -destination "platform=iOS Simulator,name=iPhone 6,OS=8.3" # 64bit
-      -destination "platform=iOS Simulator,name=iPad 2,OS=7.1" # 32bit
+ #     -destination "platform=iOS Simulator,name=iPad 2,OS=7.1" # 32bit
       -destination "platform=iOS Simulator,name=iPad Air,OS=8.3" # 64bit
   )
   header "Doing Xcode iOS build/tests - Debug"
@@ -216,7 +216,7 @@ fi
 if [[ "${DO_XCODE_OSX_TESTS}" == "yes" ]] ; then
   XCODEBUILD_TEST_BASE_OSX=(
     xcodebuild
-      -project objectivec/ProtocolBuffers_OSX.xcodeproj
+      -project swift/ProtocolBuffers_OSX.xcodeproj
       -scheme ProtocolBuffers
       # Since the ObjC 2.0 Runtime is required, 32bit OS X isn't supported.
       -destination "platform=OS X,arch=x86_64" # 64bit
