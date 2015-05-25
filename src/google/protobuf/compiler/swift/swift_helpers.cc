@@ -312,8 +312,8 @@ SwiftType GetSwiftType(FieldDescriptor::Type field_type) {
 
 string PrimitiveTypeName(SwiftType type) {
   switch (type) {
-    case SWIFTTYPE_INT    : return "int";
-    case SWIFTTYPE_LONG   : return "long";
+    case SWIFTTYPE_INT    : return "Int32";
+    case SWIFTTYPE_LONG   : return "Int64";
     case SWIFTTYPE_FLOAT  : return "float";
     case SWIFTTYPE_DOUBLE : return "double";
     case SWIFTTYPE_BOOLEAN: return "boolean";

@@ -240,25 +240,15 @@ void PrimitiveFieldGenerator::GenerateInitSavedDefaultCode(io::Printer* printer)
 
 void PrimitiveFieldGenerator::
 GenerateMembers(io::Printer* printer, bool lazy_init) const {
-  if (variables_.find("default_constant") != variables_.end()) {
-    // Those primitive types that need a saved default.
-    if (lazy_init) {
-      printer->Print(variables_,
-        "private static $type$ $default_constant$;\n");
-    } else {
-      printer->Print(variables_,
-        "private static final $type$ $default_constant$ =\n"
-        "    $default_constant_value$;\n");
-    }
-  }
-
   printer->Print(variables_,
-    "public $type$ $name$;\n");
+    "let $name$: $type$");
 
-  if (params_.generate_has()) {
+  if (variables_.find("default_constant") != variables_.end()) {
     printer->Print(variables_,
-      "public boolean has$capitalized_name$;\n");
+      " =  $default_constant_value$");
   }
+
+  printer->Print("\n");
 }
 
 void PrimitiveFieldGenerator::
