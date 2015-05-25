@@ -114,58 +114,10 @@ void MessageGenerator::Generate(io::Printer* printer) {
         "'store_unknown_fields' generator option is 'true'\n";
   }
 
-  const string& file_name = descriptor_->file()->name();
-  bool is_own_file =
-    params_.java_multiple_files(file_name)
-      && descriptor_->containing_type() == NULL;
-
-  if (is_own_file) {
-    // Note: constants (from enums and fields requiring stored defaults, emitted in the loop below)
-    // may have the same names as constants in the nested classes. This causes Java warnings, but
-    // is not fatal, so we suppress those warnings here in the top-most class declaration.
-    printer->Print(
-      "\n"
-      "@SuppressWarnings(\"hiding\")\n"
-      "public final class $classname$ extends\n",
-      "classname", descriptor_->name());
-  } else {
-    printer->Print(
-      "\n"
-      "public static final class $classname$ extends\n",
-      "classname", descriptor_->name());
-  }
-  if (params_.store_unknown_fields() && params_.parcelable_messages()) {
-    printer->Print(
-      "    com.google.protobuf.nano.android.ParcelableExtendableMessageNano<$classname$>",
-      "classname", descriptor_->name());
-  } else if (params_.store_unknown_fields()) {
-    printer->Print(
-      "    com.google.protobuf.nano.ExtendableMessageNano<$classname$>",
-      "classname", descriptor_->name());
-  } else if (params_.parcelable_messages()) {
-    printer->Print(
-      "    com.google.protobuf.nano.android.ParcelableMessageNano");
-  } else {
-    printer->Print(
-      "    com.google.protobuf.nano.MessageNano");
-  }
-  if (params_.generate_clone()) {
-    printer->Print(" implements java.lang.Cloneable {\n");
-  } else {
-    printer->Print(" {\n");
-  }
+  printer->Print(
+    "public struct $classname$: Message {\n",
+    "classname", descriptor_->name());
   printer->Indent();
-
-  if (params_.parcelable_messages()) {
-    printer->Print(
-      "\n"
-      "// Used by Parcelable\n"
-      "@SuppressWarnings({\"unused\"})\n"
-      "public static final android.os.Parcelable.Creator<$classname$> CREATOR =\n"
-      "    new com.google.protobuf.nano.android.ParcelableMessageNanoCreator<\n"
-      "        $classname$>($classname$.class);\n",
-      "classname", descriptor_->name());
-  }
 
   // Nested types and extensions
   for (int i = 0; i < descriptor_->extension_count(); i++) {
@@ -182,74 +134,38 @@ void MessageGenerator::Generate(io::Printer* printer) {
   }
 
   // oneof
-  map<string, string> vars;
-  vars["message_name"] = descriptor_->name();
-  for (int i = 0; i < descriptor_->oneof_decl_count(); i++) {
-    const OneofDescriptor* oneof_desc = descriptor_->oneof_decl(i);
-    vars["oneof_name"] = UnderscoresToCamelCase(oneof_desc);
-    vars["oneof_capitalized_name"] =
-        UnderscoresToCapitalizedCamelCase(oneof_desc);
-    vars["oneof_index"] = SimpleItoa(oneof_desc->index());
-    // Oneof Constants
-    for (int j = 0; j < oneof_desc->field_count(); j++) {
-      const FieldDescriptor* field = oneof_desc->field(j);
-      vars["number"] = SimpleItoa(field->number());
-      vars["cap_field_name"] = ToUpper(field->name());
-      printer->Print(vars,
-        "public static final int $cap_field_name$_FIELD_NUMBER = $number$;\n");
-    }
-    // oneofCase_ and oneof_
-    printer->Print(vars,
-      "private int $oneof_name$Case_ = 0;\n"
-      "private java.lang.Object $oneof_name$_;\n");
-    printer->Print(vars,
-      "public int get$oneof_capitalized_name$Case() {\n"
-      "  return this.$oneof_name$Case_;\n"
-      "}\n");
-    // Oneof clear
-    printer->Print(vars,
-      "public $message_name$ clear$oneof_capitalized_name$() {\n"
-      "  this.$oneof_name$Case_ = 0;\n"
-      "  this.$oneof_name$_ = null;\n"
-      "  return this;\n"
-      "}\n");
-  }
-
-  // Lazy initialization of otherwise static final fields can help prevent the
-  // class initializer from being generated. We want to prevent it because it
-  // stops ProGuard from inlining any methods in this class into call sites and
-  // therefore reducing the method count. However, extensions are best kept as
-  // public static final fields with initializers, so with their existence we
-  // won't bother with lazy initialization.
-  bool lazy_init = descriptor_->extension_count() == 0;
-
-  // Empty array
-  if (lazy_init) {
-    printer->Print(
-      "\n"
-      "private static volatile $classname$[] _emptyArray;\n"
-      "public static $classname$[] emptyArray() {\n"
-      "  // Lazily initializes the empty array\n"
-      "  if (_emptyArray == null) {\n"
-      "    synchronized (\n"
-      "        com.google.protobuf.nano.InternalNano.LAZY_INIT_LOCK) {\n"
-      "      if (_emptyArray == null) {\n"
-      "        _emptyArray = new $classname$[0];\n"
-      "      }\n"
-      "    }\n"
-      "  }\n"
-      "  return _emptyArray;\n"
-      "}\n",
-      "classname", descriptor_->name());
-  } else {
-    printer->Print(
-      "\n"
-      "private static final $classname$[] EMPTY_ARRAY = {};\n"
-      "public static $classname$[] emptyArray() {\n"
-      "  return EMPTY_ARRAY;\n"
-      "}\n",
-      "classname", descriptor_->name());
-  }
+  // map<string, string> vars;
+  // vars["message_name"] = descriptor_->name();
+  // for (int i = 0; i < descriptor_->oneof_decl_count(); i++) {
+  //   const OneofDescriptor* oneof_desc = descriptor_->oneof_decl(i);
+  //   vars["oneof_name"] = UnderscoresToCamelCase(oneof_desc);
+  //   vars["oneof_capitalized_name"] =
+  //       UnderscoresToCapitalizedCamelCase(oneof_desc);
+  //   vars["oneof_index"] = SimpleItoa(oneof_desc->index());
+  //   // Oneof Constants
+  //   for (int j = 0; j < oneof_desc->field_count(); j++) {
+  //     const FieldDescriptor* field = oneof_desc->field(j);
+  //     vars["number"] = SimpleItoa(field->number());
+  //     vars["cap_field_name"] = ToUpper(field->name());
+  //     printer->Print(vars,
+  //       "public static final int $cap_field_name$_FIELD_NUMBER = $number$;\n");
+  //   }
+  //   // oneofCase_ and oneof_
+  //   printer->Print(vars,
+  //     "private int $oneof_name$Case_ = 0;\n"
+  //     "private java.lang.Object $oneof_name$_;\n");
+  //   printer->Print(vars,
+  //     "public int get$oneof_capitalized_name$Case() {\n"
+  //     "  return this.$oneof_name$Case_;\n"
+  //     "}\n");
+  //   // Oneof clear
+  //   printer->Print(vars,
+  //     "public $message_name$ clear$oneof_capitalized_name$() {\n"
+  //     "  this.$oneof_name$Case_ = 0;\n"
+  //     "  this.$oneof_name$_ = null;\n"
+  //     "  return this;\n"
+  //     "}\n");
+  // }
 
   // Integers for bit fields
   int totalInts = (field_generators_.total_bits() + 31) / 32;
@@ -266,74 +182,74 @@ void MessageGenerator::Generate(io::Printer* printer) {
     printer->Print("\n");
     PrintFieldComment(printer, descriptor_->field(i));
     field_generators_.get(descriptor_->field(i)).GenerateMembers(
-        printer, lazy_init);
+        printer, false);
   }
 
-  // Constructor, with lazy init code if needed
-  if (lazy_init && field_generators_.saved_defaults_needed()) {
-    printer->Print(
-      "\n"
-      "private static volatile boolean _classInitialized;\n"
-      "\n"
-      "public $classname$() {\n"
-      "  // Lazily initializes the field defaults\n"
-      "  if (!_classInitialized) {\n"
-      "    synchronized (\n"
-      "        com.google.protobuf.nano.InternalNano.LAZY_INIT_LOCK) {\n"
-      "      if (!_classInitialized) {\n",
-      "classname", descriptor_->name());
-    printer->Indent();
-    printer->Indent();
-    printer->Indent();
-    printer->Indent();
-    for (int i = 0; i < descriptor_->field_count(); i++) {
-      field_generators_.get(descriptor_->field(i))
-          .GenerateInitSavedDefaultCode(printer);
-    }
-    printer->Outdent();
-    printer->Outdent();
-    printer->Outdent();
-    printer->Outdent();
-    printer->Print(
-      "        _classInitialized = true;\n"
-      "      }\n"
-      "    }\n"
-      "  }\n");
-    if (params_.generate_clear()) {
-      printer->Print("  clear();\n");
-    }
-    printer->Print("}\n");
-  } else {
-    printer->Print(
-      "\n"
-      "public $classname$() {\n",
-      "classname", descriptor_->name());
-    if (params_.generate_clear()) {
-      printer->Print("  clear();\n");
-    } else {
-      printer->Indent();
-      GenerateFieldInitializers(printer);
-      printer->Outdent();
-    }
-    printer->Print("}\n");
-  }
+  // // Constructor, with lazy init code if needed
+  // if (lazy_init && field_generators_.saved_defaults_needed()) {
+  //   printer->Print(
+  //     "\n"
+  //     "private static volatile boolean _classInitialized;\n"
+  //     "\n"
+  //     "public $classname$() {\n"
+  //     "  // Lazily initializes the field defaults\n"
+  //     "  if (!_classInitialized) {\n"
+  //     "    synchronized (\n"
+  //     "        com.google.protobuf.nano.InternalNano.LAZY_INIT_LOCK) {\n"
+  //     "      if (!_classInitialized) {\n",
+  //     "classname", descriptor_->name());
+  //   printer->Indent();
+  //   printer->Indent();
+  //   printer->Indent();
+  //   printer->Indent();
+  //   for (int i = 0; i < descriptor_->field_count(); i++) {
+  //     field_generators_.get(descriptor_->field(i))
+  //         .GenerateInitSavedDefaultCode(printer);
+  //   }
+  //   printer->Outdent();
+  //   printer->Outdent();
+  //   printer->Outdent();
+  //   printer->Outdent();
+  //   printer->Print(
+  //     "        _classInitialized = true;\n"
+  //     "      }\n"
+  //     "    }\n"
+  //     "  }\n");
+  //   if (params_.generate_clear()) {
+  //     printer->Print("  clear();\n");
+  //   }
+  //   printer->Print("}\n");
+  // } else {
+  //   printer->Print(
+  //     "\n"
+  //     "public $classname$() {\n",
+  //     "classname", descriptor_->name());
+  //   if (params_.generate_clear()) {
+  //     printer->Print("  clear();\n");
+  //   } else {
+  //     printer->Indent();
+  //     GenerateFieldInitializers(printer);
+  //     printer->Outdent();
+  //   }
+  //   printer->Print("}\n");
+  // }
 
-  // Other methods in this class
+  // // Other methods in this class
 
-  GenerateClear(printer);
+  // GenerateClear(printer);
 
-  if (params_.generate_clone()) {
-    GenerateClone(printer);
-  }
+  // if (params_.generate_clone()) {
+  //   GenerateClone(printer);
+  // }
 
-  if (params_.generate_equals()) {
-    GenerateEquals(printer);
-    GenerateHashCode(printer);
-  }
+  // if (params_.generate_equals()) {
+  //   GenerateEquals(printer);
+  //   GenerateHashCode(printer);
+  // }
 
-  GenerateMessageSerializationMethods(printer);
-  GenerateMergeFromMethods(printer);
-  GenerateParseFromMethods(printer);
+  // GenerateMessageSerializationMethods(printer);
+  // GenerateMergeFromMethods(printer);
+  // GenerateParseFromMethods(printer);
 
   printer->Outdent();
   printer->Print("}\n");

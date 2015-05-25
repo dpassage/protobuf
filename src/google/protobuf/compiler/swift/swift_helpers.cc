@@ -96,8 +96,6 @@ static RenameKeywords sRenameKeywords;
 
 namespace {
 
-const char* kDefaultPackage = "";
-
 const string& FieldName(const FieldDescriptor* field) {
   // Groups are hacky:  The name of the field is just the lower-cased name
   // of the group type.  In Java, though, we would like to retain the original
@@ -187,20 +185,7 @@ string FileClassName(const Params& params, const FileDescriptor* file) {
   return UnderscoresToCamelCaseImpl(StripProto(basename), true);
 }
 
-string FileJavaPackage(const Params& params, const FileDescriptor* file) {
-  if (params.has_java_package(file->name())) {
-    return params.java_package(file->name());
-  } else {
-    string result = kDefaultPackage;
-    if (!file->package().empty()) {
-      if (!result.empty()) result += '.';
-      result += file->package();
-    }
-    return result;
-  }
-}
-
-bool IsOuterClassNeeded(const Params& params, const FileDescriptor* file) {
+  bool IsOuterClassNeeded(const Params& params, const FileDescriptor* file) {
   // If java_multiple_files is false, the outer class is always needed.
   if (!params.java_multiple_files(file->name())) {
     return true;
@@ -226,8 +211,6 @@ string ToJavaName(const Params& params, const string& name, bool is_class,
   if (parent != NULL) {
     result.append(ClassName(params, parent));
   } else if (is_class && params.java_multiple_files(file->name())) {
-    result.append(FileJavaPackage(params, file));
-  } else {
     result.append(ClassName(params, file));
   }
   if (!result.empty()) result.append(1, '.');
@@ -236,10 +219,7 @@ string ToJavaName(const Params& params, const string& name, bool is_class,
 }
 
 string ClassName(const Params& params, const FileDescriptor* descriptor) {
-  string result = FileJavaPackage(params, descriptor);
-  if (!result.empty()) result += '.';
-  result += FileClassName(params, descriptor);
-  return result;
+  return FileClassName(params, descriptor);
 }
 
 string ClassName(const Params& params, const EnumDescriptor* descriptor) {
