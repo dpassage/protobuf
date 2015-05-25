@@ -54,40 +54,25 @@ using internal::WireFormatLite;
 
 namespace {
 
-bool IsReferenceType(JavaType type) {
-  switch (type) {
-    case JAVATYPE_INT    : return false;
-    case JAVATYPE_LONG   : return false;
-    case JAVATYPE_FLOAT  : return false;
-    case JAVATYPE_DOUBLE : return false;
-    case JAVATYPE_BOOLEAN: return false;
-    case JAVATYPE_STRING : return true;
-    case JAVATYPE_BYTES  : return true;
-    case JAVATYPE_ENUM   : return false;
-    case JAVATYPE_MESSAGE: return true;
-
-    // No default because we want the compiler to complain if any new
-    // JavaTypes are added.
-  }
-
-  GOOGLE_LOG(FATAL) << "Can't get here.";
+bool IsReferenceType(SwiftType type) {
+  // It's Swift! Everything is a reference type. No classes here!
   return false;
 }
 
-bool IsArrayType(JavaType type) {
+bool IsArrayType(SwiftType type) {
   switch (type) {
-    case JAVATYPE_INT    : return false;
-    case JAVATYPE_LONG   : return false;
-    case JAVATYPE_FLOAT  : return false;
-    case JAVATYPE_DOUBLE : return false;
-    case JAVATYPE_BOOLEAN: return false;
-    case JAVATYPE_STRING : return false;
-    case JAVATYPE_BYTES  : return true;
-    case JAVATYPE_ENUM   : return false;
-    case JAVATYPE_MESSAGE: return false;
+    case SWIFTTYPE_INT    : return false;
+    case SWIFTTYPE_LONG   : return false;
+    case SWIFTTYPE_FLOAT  : return false;
+    case SWIFTTYPE_DOUBLE : return false;
+    case SWIFTTYPE_BOOLEAN: return false;
+    case SWIFTTYPE_STRING : return false;
+    case SWIFTTYPE_BYTES  : return true;
+    case SWIFTTYPE_ENUM   : return false;
+    case SWIFTTYPE_MESSAGE: return false;
 
     // No default because we want the compiler to complain if any new
-    // JavaTypes are added.
+    // SwiftTypes are added.
   }
 
   GOOGLE_LOG(FATAL) << "Can't get here.";
@@ -174,9 +159,9 @@ void SetPrimitiveVariables(const FieldDescriptor* descriptor, const Params param
   (*variables)["number"] = SimpleItoa(descriptor->number());
   if (params.use_reference_types_for_primitives()
       && !descriptor->is_repeated()) {
-    (*variables)["type"] = BoxedPrimitiveTypeName(GetJavaType(descriptor));
+    (*variables)["type"] = BoxedPrimitiveTypeName(GetSwiftType(descriptor));
   } else {
-    (*variables)["type"] = PrimitiveTypeName(GetJavaType(descriptor));
+    (*variables)["type"] = PrimitiveTypeName(GetSwiftType(descriptor));
   }
   // Deals with defaults. For C++-string types (string and bytes),
   // we might need to have the generated code do the unicode decoding
@@ -215,7 +200,7 @@ void SetPrimitiveVariables(const FieldDescriptor* descriptor, const Params param
     (*variables)["default"] = DefaultValue(params, descriptor);
     (*variables)["default_copy_if_needed"] = (*variables)["default"];
   }
-  (*variables)["boxed_type"] = BoxedPrimitiveTypeName(GetJavaType(descriptor));
+  (*variables)["boxed_type"] = BoxedPrimitiveTypeName(GetSwiftType(descriptor));
   (*variables)["capitalized_type"] = GetCapitalizedType(descriptor);
   (*variables)["tag"] = SimpleItoa(WireFormat::MakeTag(descriptor));
   (*variables)["tag_size"] = SimpleItoa(
@@ -314,18 +299,18 @@ GenerateSerializationConditional(io::Printer* printer) const {
     printer->Print(variables_,
       "if (");
   }
-  JavaType java_type = GetJavaType(descriptor_);
-  if (IsArrayType(java_type)) {
+  SwiftType swift_type = GetSwiftType(descriptor_);
+  if (IsArrayType(swift_type)) {
     printer->Print(variables_,
       "!java.util.Arrays.equals(this.$name$, $default$)) {\n");
-  } else if (IsReferenceType(java_type)) {
+  } else if (IsReferenceType(swift_type)) {
     printer->Print(variables_,
       "!this.$name$.equals($default$)) {\n");
-  } else if (java_type == JAVATYPE_FLOAT) {
+  } else if (swift_type == SWIFTTYPE_FLOAT) {
     printer->Print(variables_,
       "java.lang.Float.floatToIntBits(this.$name$)\n"
       "    != java.lang.Float.floatToIntBits($default$)) {\n");
-  } else if (java_type == JAVATYPE_DOUBLE) {
+  } else if (swift_type == SWIFTTYPE_DOUBLE) {
     printer->Print(variables_,
       "java.lang.Double.doubleToLongBits(this.$name$)\n"
       "    != java.lang.Double.doubleToLongBits($default$)) {\n");
@@ -378,8 +363,8 @@ GenerateEqualsCode(io::Printer* printer) const {
   // then if the field value equals the default value in both messages,
   // but one's 'has' field is set and the other's is not, the serialized
   // forms are different and we should return false.
-  JavaType java_type = GetJavaType(descriptor_);
-  if (java_type == JAVATYPE_BYTES) {
+  SwiftType swift_type = GetSwiftType(descriptor_);
+  if (swift_type == SWIFTTYPE_BYTES) {
     printer->Print(variables_,
       "if (!java.util.Arrays.equals(this.$name$, other.$name$)");
     if (params_.generate_has()) {
@@ -391,7 +376,7 @@ GenerateEqualsCode(io::Printer* printer) const {
     printer->Print(") {\n"
       "  return false;\n"
       "}\n");
-  } else if (java_type == JAVATYPE_STRING
+  } else if (swift_type == SWIFTTYPE_STRING
       || params_.use_reference_types_for_primitives()) {
     printer->Print(variables_,
       "if (this.$name$ == null) {\n"
@@ -408,7 +393,7 @@ GenerateEqualsCode(io::Printer* printer) const {
     printer->Print(") {\n"
       "  return false;\n"
       "}\n");
-  } else if (java_type == JAVATYPE_FLOAT) {
+  } else if (swift_type == SWIFTTYPE_FLOAT) {
     printer->Print(variables_,
       "{\n"
       "  int bits = java.lang.Float.floatToIntBits(this.$name$);\n"
@@ -423,7 +408,7 @@ GenerateEqualsCode(io::Printer* printer) const {
       "    return false;\n"
       "  }\n"
       "}\n");
-  } else if (java_type == JAVATYPE_DOUBLE) {
+  } else if (swift_type == SWIFTTYPE_DOUBLE) {
     printer->Print(variables_,
       "{\n"
       "  long bits = java.lang.Double.doubleToLongBits(this.$name$);\n"
@@ -455,46 +440,46 @@ GenerateEqualsCode(io::Printer* printer) const {
 
 void PrimitiveFieldGenerator::
 GenerateHashCodeCode(io::Printer* printer) const {
-  JavaType java_type = GetJavaType(descriptor_);
-  if (java_type == JAVATYPE_BYTES) {
+  SwiftType swift_type = GetSwiftType(descriptor_);
+  if (swift_type == SWIFTTYPE_BYTES) {
     printer->Print(variables_,
       "result = 31 * result + java.util.Arrays.hashCode(this.$name$);\n");
-  } else if (java_type == JAVATYPE_STRING
+  } else if (swift_type == SWIFTTYPE_STRING
       || params_.use_reference_types_for_primitives()) {
     printer->Print(variables_,
       "result = 31 * result\n"
       "    + (this.$name$ == null ? 0 : this.$name$.hashCode());\n");
   } else {
-    switch (java_type) {
+    switch (swift_type) {
       // For all Java primitive types below, the hash codes match the
       // results of BoxedType.valueOf(primitiveValue).hashCode().
-      case JAVATYPE_INT:
+      case SWIFTTYPE_INT:
         printer->Print(variables_,
           "result = 31 * result + this.$name$;\n");
         break;
-      case JAVATYPE_LONG:
+      case SWIFTTYPE_LONG:
         printer->Print(variables_,
           "result = 31 * result\n"
           "    + (int) (this.$name$ ^ (this.$name$ >>> 32));\n");
         break;
-      case JAVATYPE_FLOAT:
+      case SWIFTTYPE_FLOAT:
         printer->Print(variables_,
           "result = 31 * result\n"
           "    + java.lang.Float.floatToIntBits(this.$name$);\n");
         break;
-      case JAVATYPE_DOUBLE:
+      case SWIFTTYPE_DOUBLE:
         printer->Print(variables_,
           "{\n"
           "  long v = java.lang.Double.doubleToLongBits(this.$name$);\n"
           "  result = 31 * result + (int) (v ^ (v >>> 32));\n"
           "}\n");
         break;
-      case JAVATYPE_BOOLEAN:
+      case SWIFTTYPE_BOOLEAN:
         printer->Print(variables_,
           "result = 31 * result + (this.$name$ ? 1231 : 1237);\n");
         break;
       default:
-        GOOGLE_LOG(ERROR) << "unknown java type for primitive field";
+        GOOGLE_LOG(ERROR) << "unknown swift type for primitive field";
         break;
     }
   }
@@ -543,7 +528,7 @@ GenerateMembers(io::Printer* printer, bool lazy_init) const {
     "  return $name$_;\n"
     "}\n"
     "public $message_name$ set$capitalized_name$($type$ value) {\n");
-  if (IsReferenceType(GetJavaType(descriptor_))) {
+  if (IsReferenceType(GetSwiftType(descriptor_))) {
     printer->Print(variables_,
       "  if (value == null) {\n"
       "    throw new java.lang.NullPointerException();\n"
@@ -596,10 +581,10 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 
 void AccessorPrimitiveFieldGenerator::
 GenerateEqualsCode(io::Printer* printer) const {
-  switch (GetJavaType(descriptor_)) {
+  switch (GetSwiftType(descriptor_)) {
     // For all Java primitive types below, the equality checks match the
     // results of BoxedType.valueOf(primitiveValue).equals(otherValue).
-    case JAVATYPE_FLOAT:
+    case SWIFTTYPE_FLOAT:
       printer->Print(variables_,
         "if ($different_has$\n"
         "    || java.lang.Float.floatToIntBits($name$_)\n"
@@ -607,7 +592,7 @@ GenerateEqualsCode(io::Printer* printer) const {
         "  return false;\n"
         "}\n");
       break;
-    case JAVATYPE_DOUBLE:
+    case SWIFTTYPE_DOUBLE:
       printer->Print(variables_,
         "if ($different_has$\n"
         "    || java.lang.Double.doubleToLongBits($name$_)\n"
@@ -615,16 +600,16 @@ GenerateEqualsCode(io::Printer* printer) const {
         "  return false;\n"
         "}\n");
       break;
-    case JAVATYPE_INT:
-    case JAVATYPE_LONG:
-    case JAVATYPE_BOOLEAN:
+    case SWIFTTYPE_INT:
+    case SWIFTTYPE_LONG:
+    case SWIFTTYPE_BOOLEAN:
       printer->Print(variables_,
         "if ($different_has$\n"
         "    || $name$_ != other.$name$_) {\n"
         "  return false;\n"
         "}\n");
       break;
-    case JAVATYPE_STRING:
+    case SWIFTTYPE_STRING:
       // Accessor style would guarantee $name$_ non-null
       printer->Print(variables_,
         "if ($different_has$\n"
@@ -632,7 +617,7 @@ GenerateEqualsCode(io::Printer* printer) const {
         "  return false;\n"
         "}\n");
       break;
-    case JAVATYPE_BYTES:
+    case SWIFTTYPE_BYTES:
       // Accessor style would guarantee $name$_ non-null
       printer->Print(variables_,
         "if ($different_has$\n"
@@ -648,39 +633,39 @@ GenerateEqualsCode(io::Printer* printer) const {
 
 void AccessorPrimitiveFieldGenerator::
 GenerateHashCodeCode(io::Printer* printer) const {
-  switch (GetJavaType(descriptor_)) {
+  switch (GetSwiftType(descriptor_)) {
     // For all Java primitive types below, the hash codes match the
     // results of BoxedType.valueOf(primitiveValue).hashCode().
-    case JAVATYPE_INT:
+    case SWIFTTYPE_INT:
       printer->Print(variables_,
         "result = 31 * result + $name$_;\n");
       break;
-    case JAVATYPE_LONG:
+    case SWIFTTYPE_LONG:
       printer->Print(variables_,
         "result = 31 * result + (int) ($name$_ ^ ($name$_ >>> 32));\n");
       break;
-    case JAVATYPE_FLOAT:
+    case SWIFTTYPE_FLOAT:
       printer->Print(variables_,
         "result = 31 * result +\n"
         "    java.lang.Float.floatToIntBits($name$_);\n");
       break;
-    case JAVATYPE_DOUBLE:
+    case SWIFTTYPE_DOUBLE:
       printer->Print(variables_,
         "{\n"
         "  long v = java.lang.Double.doubleToLongBits($name$_);\n"
         "  result = 31 * result + (int) (v ^ (v >>> 32));\n"
         "}\n");
       break;
-    case JAVATYPE_BOOLEAN:
+    case SWIFTTYPE_BOOLEAN:
       printer->Print(variables_,
         "result = 31 * result + ($name$_ ? 1231 : 1237);\n");
       break;
-    case JAVATYPE_STRING:
+    case SWIFTTYPE_STRING:
       // Accessor style would guarantee $name$_ non-null
       printer->Print(variables_,
         "result = 31 * result + $name$_.hashCode();\n");
       break;
-    case JAVATYPE_BYTES:
+    case SWIFTTYPE_BYTES:
       // Accessor style would guarantee $name$_ non-null
       printer->Print(variables_,
         "result = 31 * result + java.util.Arrays.hashCode($name$_);\n");
@@ -792,7 +777,7 @@ GenerateMergingCode(io::Printer* printer) const {
     "    .getRepeatedFieldArrayLength(input, $non_packed_tag$);\n"
     "int i = this.$name$ == null ? 0 : this.$name$.length;\n");
 
-  if (GetJavaType(descriptor_) == JAVATYPE_BYTES) {
+  if (GetSwiftType(descriptor_) == SWIFTTYPE_BYTES) {
     printer->Print(variables_,
       "byte[][] newArray = new byte[i + arrayLength][];\n");
   } else {
@@ -856,9 +841,9 @@ GenerateMergingCodeFromPacked(io::Printer* printer) const {
 void RepeatedPrimitiveFieldGenerator::
 GenerateRepeatedDataSizeCode(io::Printer* printer) const {
   // Creates a variable dataSize and puts the serialized size in there.
-  // If the element type is a Java reference type, also generates
+  // If the element type is a Swift reference type, also generates
   // dataCount which stores the number of non-null elements in the field.
-  if (IsReferenceType(GetJavaType(descriptor_))) {
+  if (IsReferenceType(GetSwiftType(descriptor_))) {
     printer->Print(variables_,
       "int dataCount = 0;\n"
       "int dataSize = 0;\n"
@@ -898,7 +883,7 @@ GenerateSerializationCode(io::Printer* printer) const {
       "for (int i = 0; i < this.$name$.length; i++) {\n"
       "  output.write$capitalized_type$NoTag(this.$name$[i]);\n"
       "}\n");
-  } else if (IsReferenceType(GetJavaType(descriptor_))) {
+  } else if (IsReferenceType(GetSwiftType(descriptor_))) {
     printer->Print(variables_,
       "for (int i = 0; i < this.$name$.length; i++) {\n"
       "  $type$ element = this.$name$[i];\n"
@@ -932,7 +917,7 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
       "size += $tag_size$;\n"
       "size += com.google.protobuf.nano.CodedOutputByteBufferNano\n"
       "    .computeRawVarint32Size(dataSize);\n");
-  } else if (IsReferenceType(GetJavaType(descriptor_))) {
+  } else if (IsReferenceType(GetSwiftType(descriptor_))) {
     printer->Print(variables_,
       "size += $tag_size$ * dataCount;\n");
   } else {

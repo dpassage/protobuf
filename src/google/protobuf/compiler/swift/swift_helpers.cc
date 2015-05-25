@@ -264,86 +264,86 @@ void PrintFieldComment(io::Printer* printer, const FieldDescriptor* field) {
   }
 }
 
-JavaType GetJavaType(FieldDescriptor::Type field_type) {
+SwiftType GetSwiftType(FieldDescriptor::Type field_type) {
   switch (field_type) {
     case FieldDescriptor::TYPE_INT32:
     case FieldDescriptor::TYPE_UINT32:
     case FieldDescriptor::TYPE_SINT32:
     case FieldDescriptor::TYPE_FIXED32:
     case FieldDescriptor::TYPE_SFIXED32:
-      return JAVATYPE_INT;
+      return SWIFTTYPE_INT;
 
     case FieldDescriptor::TYPE_INT64:
     case FieldDescriptor::TYPE_UINT64:
     case FieldDescriptor::TYPE_SINT64:
     case FieldDescriptor::TYPE_FIXED64:
     case FieldDescriptor::TYPE_SFIXED64:
-      return JAVATYPE_LONG;
+      return SWIFTTYPE_LONG;
 
     case FieldDescriptor::TYPE_FLOAT:
-      return JAVATYPE_FLOAT;
+      return SWIFTTYPE_FLOAT;
 
     case FieldDescriptor::TYPE_DOUBLE:
-      return JAVATYPE_DOUBLE;
+      return SWIFTTYPE_DOUBLE;
 
     case FieldDescriptor::TYPE_BOOL:
-      return JAVATYPE_BOOLEAN;
+      return SWIFTTYPE_BOOLEAN;
 
     case FieldDescriptor::TYPE_STRING:
-      return JAVATYPE_STRING;
+      return SWIFTTYPE_STRING;
 
     case FieldDescriptor::TYPE_BYTES:
-      return JAVATYPE_BYTES;
+      return SWIFTTYPE_BYTES;
 
     case FieldDescriptor::TYPE_ENUM:
-      return JAVATYPE_ENUM;
+      return SWIFTTYPE_ENUM;
 
     case FieldDescriptor::TYPE_GROUP:
     case FieldDescriptor::TYPE_MESSAGE:
-      return JAVATYPE_MESSAGE;
+      return SWIFTTYPE_MESSAGE;
 
     // No default because we want the compiler to complain if any new
     // types are added.
   }
 
   GOOGLE_LOG(FATAL) << "Can't get here.";
-  return JAVATYPE_INT;
+  return SWIFTTYPE_INT;
 }
 
-string PrimitiveTypeName(JavaType type) {
+string PrimitiveTypeName(SwiftType type) {
   switch (type) {
-    case JAVATYPE_INT    : return "int";
-    case JAVATYPE_LONG   : return "long";
-    case JAVATYPE_FLOAT  : return "float";
-    case JAVATYPE_DOUBLE : return "double";
-    case JAVATYPE_BOOLEAN: return "boolean";
-    case JAVATYPE_STRING : return "java.lang.String";
-    case JAVATYPE_BYTES  : return "byte[]";
-    case JAVATYPE_ENUM   : return "int";
-    case JAVATYPE_MESSAGE: return "";
+    case SWIFTTYPE_INT    : return "int";
+    case SWIFTTYPE_LONG   : return "long";
+    case SWIFTTYPE_FLOAT  : return "float";
+    case SWIFTTYPE_DOUBLE : return "double";
+    case SWIFTTYPE_BOOLEAN: return "boolean";
+    case SWIFTTYPE_STRING : return "java.lang.String";
+    case SWIFTTYPE_BYTES  : return "byte[]";
+    case SWIFTTYPE_ENUM   : return "int";
+    case SWIFTTYPE_MESSAGE: return "";
 
     // No default because we want the compiler to complain if any new
-    // JavaTypes are added.
+    // SwiftTypes are added.
   }
 
   GOOGLE_LOG(FATAL) << "Can't get here.";
   return "";
 }
 
-string BoxedPrimitiveTypeName(JavaType type) {
+string BoxedPrimitiveTypeName(SwiftType type) {
   switch (type) {
-    case JAVATYPE_INT    : return "java.lang.Integer";
-    case JAVATYPE_LONG   : return "java.lang.Long";
-    case JAVATYPE_FLOAT  : return "java.lang.Float";
-    case JAVATYPE_DOUBLE : return "java.lang.Double";
-    case JAVATYPE_BOOLEAN: return "java.lang.Boolean";
-    case JAVATYPE_STRING : return "java.lang.String";
-    case JAVATYPE_BYTES  : return "byte[]";
-    case JAVATYPE_ENUM   : return "java.lang.Integer";
-    case JAVATYPE_MESSAGE: return "";
+    case SWIFTTYPE_INT    : return "java.lang.Integer";
+    case SWIFTTYPE_LONG   : return "java.lang.Long";
+    case SWIFTTYPE_FLOAT  : return "java.lang.Float";
+    case SWIFTTYPE_DOUBLE : return "java.lang.Double";
+    case SWIFTTYPE_BOOLEAN: return "java.lang.Boolean";
+    case SWIFTTYPE_STRING : return "java.lang.String";
+    case SWIFTTYPE_BYTES  : return "byte[]";
+    case SWIFTTYPE_ENUM   : return "java.lang.Integer";
+    case SWIFTTYPE_MESSAGE: return "";
 
     // No default because we want the compiler to complain if any new
-    // JavaTypes are added.
+    // SwiftTypes are added.
   }
 
   GOOGLE_LOG(FATAL) << "Can't get here.";
@@ -351,19 +351,19 @@ string BoxedPrimitiveTypeName(JavaType type) {
 }
 
 string EmptyArrayName(const Params& params, const FieldDescriptor* field) {
-  switch (GetJavaType(field)) {
-    case JAVATYPE_INT    : return "com.google.protobuf.nano.WireFormatNano.EMPTY_INT_ARRAY";
-    case JAVATYPE_LONG   : return "com.google.protobuf.nano.WireFormatNano.EMPTY_LONG_ARRAY";
-    case JAVATYPE_FLOAT  : return "com.google.protobuf.nano.WireFormatNano.EMPTY_FLOAT_ARRAY";
-    case JAVATYPE_DOUBLE : return "com.google.protobuf.nano.WireFormatNano.EMPTY_DOUBLE_ARRAY";
-    case JAVATYPE_BOOLEAN: return "com.google.protobuf.nano.WireFormatNano.EMPTY_BOOLEAN_ARRAY";
-    case JAVATYPE_STRING : return "com.google.protobuf.nano.WireFormatNano.EMPTY_STRING_ARRAY";
-    case JAVATYPE_BYTES  : return "com.google.protobuf.nano.WireFormatNano.EMPTY_BYTES_ARRAY";
-    case JAVATYPE_ENUM   : return "com.google.protobuf.nano.WireFormatNano.EMPTY_INT_ARRAY";
-    case JAVATYPE_MESSAGE: return ClassName(params, field->message_type()) + ".EMPTY_ARRAY";
+  switch (GetSwiftType(field)) {
+    case SWIFTTYPE_INT    : return "com.google.protobuf.nano.WireFormatNano.EMPTY_INT_ARRAY";
+    case SWIFTTYPE_LONG   : return "com.google.protobuf.nano.WireFormatNano.EMPTY_LONG_ARRAY";
+    case SWIFTTYPE_FLOAT  : return "com.google.protobuf.nano.WireFormatNano.EMPTY_FLOAT_ARRAY";
+    case SWIFTTYPE_DOUBLE : return "com.google.protobuf.nano.WireFormatNano.EMPTY_DOUBLE_ARRAY";
+    case SWIFTTYPE_BOOLEAN: return "com.google.protobuf.nano.WireFormatNano.EMPTY_BOOLEAN_ARRAY";
+    case SWIFTTYPE_STRING : return "com.google.protobuf.nano.WireFormatNano.EMPTY_STRING_ARRAY";
+    case SWIFTTYPE_BYTES  : return "com.google.protobuf.nano.WireFormatNano.EMPTY_BYTES_ARRAY";
+    case SWIFTTYPE_ENUM   : return "com.google.protobuf.nano.WireFormatNano.EMPTY_INT_ARRAY";
+    case SWIFTTYPE_MESSAGE: return ClassName(params, field->message_type()) + ".EMPTY_ARRAY";
 
     // No default because we want the compiler to complain if any new
-    // JavaTypes are added.
+    // SwiftTypes are added.
   }
 
   GOOGLE_LOG(FATAL) << "Can't get here.";

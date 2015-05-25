@@ -117,30 +117,30 @@ string FieldDefaultConstantName(const FieldDescriptor *field);
 // Print the field's proto-syntax definition as a comment.
 void PrintFieldComment(io::Printer* printer, const FieldDescriptor* field);
 
-enum JavaType {
-  JAVATYPE_INT,
-  JAVATYPE_LONG,
-  JAVATYPE_FLOAT,
-  JAVATYPE_DOUBLE,
-  JAVATYPE_BOOLEAN,
-  JAVATYPE_STRING,
-  JAVATYPE_BYTES,
-  JAVATYPE_ENUM,
-  JAVATYPE_MESSAGE
+enum SwiftType {
+  SWIFTTYPE_INT,
+  SWIFTTYPE_LONG,
+  SWIFTTYPE_FLOAT,
+  SWIFTTYPE_DOUBLE,
+  SWIFTTYPE_BOOLEAN,
+  SWIFTTYPE_STRING,
+  SWIFTTYPE_BYTES,
+  SWIFTTYPE_ENUM,
+  SWIFTTYPE_MESSAGE
 };
 
-JavaType GetJavaType(FieldDescriptor::Type field_type);
+SwiftType GetSwiftType(FieldDescriptor::Type field_type);
 
-inline JavaType GetJavaType(const FieldDescriptor* field) {
-  return GetJavaType(field->type());
+inline SwiftType GetSwiftType(const FieldDescriptor* field) {
+  return GetSwiftType(field->type());
 }
 
-string PrimitiveTypeName(JavaType type);
+string PrimitiveTypeName(SwiftType type);
 
 // Get the fully-qualified class name for a boxed primitive type, e.g.
 // "java.lang.Integer" for JAVATYPE_INT.  Returns NULL for enum and message
 // types.
-string BoxedPrimitiveTypeName(JavaType type);
+string BoxedPrimitiveTypeName(SwiftType type);
 
 string EmptyArrayName(const Params& params, const FieldDescriptor* field);
 

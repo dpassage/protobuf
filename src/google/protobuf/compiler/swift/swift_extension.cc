@@ -84,9 +84,9 @@ void SetVariables(const FieldDescriptor* descriptor, const Params params,
   bool repeated = descriptor->is_repeated();
   (*variables)["repeated"] = repeated ? "Repeated" : "";
   (*variables)["type"] = GetTypeConstantName(descriptor->type());
-  JavaType java_type = GetJavaType(descriptor->type());
+  SwiftType swift_type = GetSwiftType(descriptor->type());
   string tag = SimpleItoa(WireFormat::MakeTag(descriptor));
-  if (java_type == JAVATYPE_MESSAGE) {
+  if (swift_type == SWIFTTYPE_MESSAGE) {
     (*variables)["ext_type"] = "MessageTyped";
     string message_type = ClassName(params, descriptor->message_type());
     if (repeated) {
@@ -99,10 +99,10 @@ void SetVariables(const FieldDescriptor* descriptor, const Params params,
   } else {
     (*variables)["ext_type"] = "PrimitiveTyped";
     if (!repeated) {
-      (*variables)["class"] = BoxedPrimitiveTypeName(java_type);
+      (*variables)["class"] = BoxedPrimitiveTypeName(swift_type);
       (*variables)["tag_params"] = tag;
     } else {
-      (*variables)["class"] = PrimitiveTypeName(java_type) + "[]";
+      (*variables)["class"] = PrimitiveTypeName(swift_type) + "[]";
       if (!descriptor->is_packable()) {
         // Non-packable: nonPackedTag == tag, packedTag == 0
         (*variables)["tag_params"] = tag + ", " + tag + ", 0";

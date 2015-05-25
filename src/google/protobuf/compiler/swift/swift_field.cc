@@ -94,36 +94,36 @@ FieldGeneratorMap::FieldGeneratorMap(
 
 FieldGenerator* FieldGeneratorMap::MakeGenerator(const FieldDescriptor* field,
     const Params &params, int* next_has_bit_index) {
-  JavaType java_type = GetJavaType(field);
+  SwiftType swift_type = GetSwiftType(field);
   if (field->is_repeated()) {
-    switch (java_type) {
-      case JAVATYPE_MESSAGE:
+    switch (swift_type) {
+      case SWIFTTYPE_MESSAGE:
         if (IsMapEntry(field->message_type())) {
           return new MapFieldGenerator(field, params);
         } else {
           return new RepeatedMessageFieldGenerator(field, params);
         }
-      case JAVATYPE_ENUM:
+      case SWIFTTYPE_ENUM:
         return new RepeatedEnumFieldGenerator(field, params);
       default:
         return new RepeatedPrimitiveFieldGenerator(field, params);
     }
   } else if (field->containing_oneof()) {
-    switch (java_type) {
-      case JAVATYPE_MESSAGE:
+    switch (swift_type) {
+      case SWIFTTYPE_MESSAGE:
         return new MessageOneofFieldGenerator(field, params);
-      case JAVATYPE_ENUM:
+      case SWIFTTYPE_ENUM:
       default:
         return new PrimitiveOneofFieldGenerator(field, params);
     }
   } else if (params.optional_field_accessors() && field->is_optional()
-      && java_type != JAVATYPE_MESSAGE) {
+      && swift_type != SWIFTTYPE_MESSAGE) {
     // We need a has-bit for each primitive/enum field because their default
     // values could be same as explicitly set values. But we don't need it
     // for a message field because they have no defaults and Nano uses 'null'
     // for unset messages, which cannot be set explicitly.
-    switch (java_type) {
-      case JAVATYPE_ENUM:
+    switch (swift_type) {
+      case SWIFTTYPE_ENUM:
         return new AccessorEnumFieldGenerator(
             field, params, (*next_has_bit_index)++);
       default:
@@ -131,10 +131,10 @@ FieldGenerator* FieldGeneratorMap::MakeGenerator(const FieldDescriptor* field,
             field, params, (*next_has_bit_index)++);
     }
   } else {
-    switch (java_type) {
-      case JAVATYPE_MESSAGE:
+    switch (swift_type) {
+      case SWIFTTYPE_MESSAGE:
         return new MessageFieldGenerator(field, params);
-      case JAVATYPE_ENUM:
+      case SWIFTTYPE_ENUM:
         return new EnumFieldGenerator(field, params);
       default:
         return new PrimitiveFieldGenerator(field, params);
@@ -171,7 +171,7 @@ void SetCommonOneofVariables(const FieldDescriptor* descriptor,
 void GenerateOneofFieldEquals(const FieldDescriptor* descriptor,
                               const map<string, string>& variables,
                               io::Printer* printer) {
-  if (GetJavaType(descriptor) == JAVATYPE_BYTES) {
+  if (GetSwiftType(descriptor) == SWIFTTYPE_BYTES) {
     printer->Print(variables,
       "if (this.has$capitalized_name$()) {\n"
       "  if (!java.util.Arrays.equals((byte[]) this.$oneof_name$_,\n"
@@ -192,7 +192,7 @@ void GenerateOneofFieldEquals(const FieldDescriptor* descriptor,
 void GenerateOneofFieldHashCode(const FieldDescriptor* descriptor,
                                 const map<string, string>& variables,
                                 io::Printer* printer) {
-  if (GetJavaType(descriptor) == JAVATYPE_BYTES) {
+  if (GetSwiftType(descriptor) == SWIFTTYPE_BYTES) {
     printer->Print(variables,
       "result = 31 * result + ($has_oneof_case$\n"
       "   ? java.util.Arrays.hashCode((byte[]) this.$oneof_name$_) : 0);\n");

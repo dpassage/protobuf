@@ -44,24 +44,24 @@ namespace {
 
 string TypeName(const Params& params, const FieldDescriptor* field,
                 bool boxed) {
-  JavaType java_type = GetJavaType(field);
-  switch (java_type) {
-    case JAVATYPE_MESSAGE:
+  SwiftType swift_type = GetSwiftType(field);
+  switch (swift_type) {
+    case SWIFTTYPE_MESSAGE:
       return ClassName(params, field->message_type());
-    case JAVATYPE_INT:
-    case JAVATYPE_LONG:
-    case JAVATYPE_FLOAT:
-    case JAVATYPE_DOUBLE:
-    case JAVATYPE_BOOLEAN:
-    case JAVATYPE_STRING:
-    case JAVATYPE_BYTES:
-    case JAVATYPE_ENUM:
+    case SWIFTTYPE_INT:
+    case SWIFTTYPE_LONG:
+    case SWIFTTYPE_FLOAT:
+    case SWIFTTYPE_DOUBLE:
+    case SWIFTTYPE_BOOLEAN:
+    case SWIFTTYPE_STRING:
+    case SWIFTTYPE_BYTES:
+    case SWIFTTYPE_ENUM:
       if (boxed) {
-        return BoxedPrimitiveTypeName(java_type);
+        return BoxedPrimitiveTypeName(swift_type);
       } else {
-        return PrimitiveTypeName(java_type);
+        return PrimitiveTypeName(swift_type);
       }
-    // No default because we want the compiler to complain if any new JavaTypes
+    // No default because we want the compiler to complain if any new SwiftTypes
     // are added..
   }
 
