@@ -33,6 +33,30 @@ class VarintTests: XCTestCase {
         XCTFail("parse should have vailed")
     }
 
+    func testSingleByteInt() {
+        let inputBytes: [UInt8] = [0x01]
+
+        do {
+            let (_, bytesConsumed) = try Varint.fromBytes(inputBytes)
+            XCTAssertEqual(bytesConsumed, 1)
+
+        } catch {
+            XCTFail("should not have thrown")
+        }
+
+    }
+
+    func testTooManyBytes() {
+        let inputBytes = Array<UInt8>(count: 11, repeatedValue: 0x80)
+
+        do {
+            _ = try Varint.fromBytes(inputBytes)
+        } catch {
+            // test passed, return
+            return
+        }
+        XCTFail("parse should have vailed")
+    }
     func testPerformanceExample() {
     }
 
